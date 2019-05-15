@@ -11,8 +11,14 @@ use Mix.Config
 # before starting your production server.
 config :lasso, LassoWeb.Endpoint,
   http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  url: [host: System.get_env("APP_NAME") <> ".gigalixirapp.com", port: 80],
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  server: true,
+  pubsub: [name: Lasso.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: System.get_env("SECRET_SALT") || "38k3jc4wTIxlt16PsbudWeXe497ET9TM"
+  ]
 
 # Do not print debug messages in production
 config :logger, level: :info
