@@ -1,0 +1,5 @@
+<section class="row">
+  <%= form_for @conn, Routes.lasso_path(@conn, :new), [method: :post], fn f -> %>
+      <%= submit "Create new hook destination" %>
+  <% end %>
+</section>
