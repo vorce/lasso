@@ -1,7 +1,0 @@
-<section class="row">
-This is your webhook destination, it will be alive for 24 hours.
-
-Post a message to the inbox by making a request to <%= @url %>.
-
-BOX WITH REQUESTS HERE
-</section>

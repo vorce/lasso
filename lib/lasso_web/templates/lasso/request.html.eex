@@ -1,0 +1,3 @@
+<div>
+Request datas: <pre><code><%= inspect(@request) %></code></pre>
+</div>
