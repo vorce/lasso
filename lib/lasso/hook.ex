@@ -28,9 +28,7 @@ defmodule Lasso.Hook do
     end
   end
 
-  def add(uuid, conn, params) do
-    request = {conn, params}
-
+  def add(uuid, request) do
     with :ok <- update(uuid, request) do
       notify_subscribers(uuid, request)
     end

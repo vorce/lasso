@@ -1,17 +1,23 @@
 <div class="row">
-<p>This is your webhook destination, it will be alive for 24 hours.</p>
+<div id="intro">
+    <p>
+    This is your webhook destination, it will be alive for 24 hours.
 
-<p>Post a message to the inbox by making a request to <%= @url %>.</p>
+    Post a message to the inbox by making a request to <%= @url %>.</p>
 
-<p>
-Ex:
-<code>curl -XPOST <%= @url %> -d "hello!"</code>
-</p>
-
-<div id="requests">
-<%= for request <- @requests do %>
-    <%= render "request.html", request: request %>
-<% end %>
+    <p>
+    Ex:
+    <code>curl -XPOST <%= @url %> -d "hello!"</code>
+    </p>
+</div>
 </div>
 
+<hr />
+
+<div class="row">
+<div id="requests">
+    <%= for request <- @requests do %>
+        <%= render "request.html", request: request %>
+    <% end %>
+</div>
 </div>

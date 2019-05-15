@@ -5,7 +5,15 @@ defmodule LassoWeb.LassoController do
   def show(conn, %{"uuid" => uuid} = params) do
     url = "http://localhost:4000/hooks/#{uuid}"
 
-    live_render(conn, LassoWeb.LassoLiveView, session: %{url: url, uuid: uuid})
+    with {:ok, requests} <- Lasso.Hook.get(uuid) do
+      live_render(conn, LassoWeb.LassoLiveView,
+        session: %{url: url, uuid: uuid, requests: requests}
+      )
+    else
+      {:error, :no_such_key, _} ->
+        conn
+        |> resp(404, "")
+    end
   end
 
   def new(conn, _params) do
@@ -13,7 +21,8 @@ defmodule LassoWeb.LassoController do
     url = "http://localhost:4000/hooks/#{uuid}"
 
     with :ok <- Lasso.Hook.create(uuid) do
-      live_render(conn, LassoWeb.LassoLiveView, session: %{url: url, uuid: uuid})
+      redirect(conn, to: "/lasso/#{uuid}")
+      # live_render(conn, LassoWeb.LassoLiveView, session: %{url: url, uuid: uuid, requests: []})
     end
   end
 end

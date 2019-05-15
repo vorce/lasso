@@ -10,7 +10,7 @@ defmodule LassoWeb.LassoLiveView do
 
   def mount(session, socket) do
     Lasso.Hook.subscribe(session.uuid)
-    {:ok, assign(socket, requests: [], url: session.url, uuid: session.uuid)}
+    {:ok, assign(socket, requests: session.requests, url: session.url, uuid: session.uuid)}
   end
 
   def handle_info({Lasso.Hook, uuid, request}, socket) do

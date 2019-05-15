@@ -25,10 +25,10 @@ defmodule LassoWeb.Router do
 
   # Other scopes may use custom stacks.
   scope "/hooks", LassoWeb do
-    get "/:uuid", HookController, :get
-    put "/:uuid", HookController, :put
-    post "/:uuid", HookController, :post
-    delete "/:uuid", HookController, :delete
-    patch "/:uuid", HookController, :patch
+    get "/:uuid", HookController, :request
+    put "/:uuid", HookController, :request
+    post "/:uuid", HookController, :request
+    delete "/:uuid", HookController, :request
+    patch "/:uuid", HookController, :request
   end
 end

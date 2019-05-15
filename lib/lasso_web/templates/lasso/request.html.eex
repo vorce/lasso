@@ -1,3 +1,26 @@
-<div>
-Request datas: <pre><code><%= inspect(@request) %></code></pre>
+<div class="row">
+    <div class="column" id="method"><%= @request.method %> <%= @request.request_path %></div>
+</div>
+<div class="row">
+    <div class="column column-50" id="timestamp"><%= DateTime.to_iso8601(@request.timestamp) %></div>
+    <div class="column column-50" id="headers">
+        <details>
+            <summary>Headers</summary>
+            <%= inspect(@request.headers) %>
+        </details>
+    </div>
+</div>
+<div class="row">
+    <div class="column column-50" id="ip"><%= inspect(@request.ip) %></div>
+    <div class="column column-50" id="query_params">
+        <details>
+            <summary>Query params</summary>
+            <%= inspect(@request.query_params) %>
+        </details>
+    </div>
+</div>
+<div class="row">
+    <div class="column" id="body">
+        <pre><code><%= @request.body %></code></pre>
+    </div>
 </div>
