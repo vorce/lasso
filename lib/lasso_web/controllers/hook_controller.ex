@@ -9,7 +9,7 @@ defmodule LassoWeb.HookController do
       headers: conn.req_headers,
       request_path: conn.request_path,
       ip: conn.remote_ip,
-      body: conn.private.raw_body
+      body: conn.private[:raw_body] || ""
     }
 
     with {:ok, _value} <- Lasso.Hook.get(uuid),

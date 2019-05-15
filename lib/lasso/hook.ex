@@ -3,6 +3,7 @@ defmodule Lasso.Hook do
   Contains state of all active hooks
   """
   @cache_id :hook_cache
+  @request_limit 100
 
   @topic inspect(__MODULE__)
 
@@ -29,7 +30,6 @@ defmodule Lasso.Hook do
   end
 
   def add(uuid, request) do
-    # TODO limit to 100 requests per hook?
     with :ok <- update(uuid, request) do
       notify_subscribers(uuid, request)
     end
@@ -39,7 +39,7 @@ defmodule Lasso.Hook do
     ConCache.update(@cache_id, uuid, fn val ->
       case val do
         nil -> {:ok, [request]}
-        val -> {:ok, [request | val]}
+        val -> {:ok, Enum.take([request | val], @request_limit)}
       end
     end)
   end
