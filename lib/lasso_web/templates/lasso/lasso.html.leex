@@ -1,21 +1,19 @@
 <div class="row">
-<div id="intro">
+<div class="col-11">
     <p>
-    This is your webhook destination, it will be alive for 24 hours.
-
-    Post a message to the inbox by making a request to <%= @url %>.</p>
-
+    This is your lasso, it will be alive for 24 hours.
+    You can see any requests made to <a href="<%= @url %>"><%= @url %></a> here.
+    </p>
+    
     <p>
     Ex:
-    <code>curl -XPOST <%= @url %> -d "hello!"</code>
+    <code>curl -XPOST <%= @url %>?something=foo -H 'Content-type: application/json' -d '{"hello": "world"}'</code>
     </p>
 </div>
 </div>
 
-<hr />
-
-<div class="row">
-<div id="requests">
+<div class="row justify-content-center">
+<div class="col-12" id="requests">
     <%= for request <- @requests do %>
         <%= render "request.html", request: request %>
     <% end %>

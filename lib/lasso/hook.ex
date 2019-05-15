@@ -29,6 +29,7 @@ defmodule Lasso.Hook do
   end
 
   def add(uuid, request) do
+    # TODO limit to 100 requests per hook?
     with :ok <- update(uuid, request) do
       notify_subscribers(uuid, request)
     end

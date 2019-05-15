@@ -1,6 +1,8 @@
 # Lasso
 
-Web hook UI with LiveView.
+Web hook UI powered by [Phoenix](https://phoenixframework.org/) and [LiveView](https://github.com/phoenixframework/phoenix_live_view).
+
+Available on: https://
 
 ## Start
 
@@ -8,15 +10,3 @@ Web hook UI with LiveView.
 - `cd assets && npm install && cd ..`
 - `iex -S mix phx.server`
 - [`localhost:4000`](http://localhost:4000) from your browser
-
----
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix

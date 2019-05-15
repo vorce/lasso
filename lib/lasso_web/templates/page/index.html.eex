@@ -1,5 +1,18 @@
-<section class="row">
-  <%= form_for @conn, Routes.lasso_path(@conn, :new), [method: :post], fn f -> %>
-      <%= submit "Create new hook destination" %>
-  <% end %>
-</section>
+<div class="jumbotron">
+  <p class="lead">
+  Lasso is a tool to visualize http requests, specifically made for inspecting/debugging webhook callbacks.
+  </p>
+
+  <hr class="my-4">
+
+  <p>When you create a "lasso", you'll get a unique URL that you can use as the destination for whatever HTTP service you are interested in knowing more about.</p>
+  <p class="lead justify-content-center">
+    <%= form_for @conn, Routes.lasso_path(@conn, :new), [method: :post], fn f -> %>
+        <%= submit "Create new lasso", class: "btn btn-dark btn-lg" %>
+    <% end %>
+  </p>
+</div>
+
+<div class="row">
+
+</div>

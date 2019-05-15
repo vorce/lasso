@@ -1,26 +1,33 @@
+
 <div class="row">
-    <div class="column" id="method"><%= @request.method %> <%= @request.request_path %></div>
-</div>
-<div class="row">
-    <div class="column column-50" id="timestamp"><%= DateTime.to_iso8601(@request.timestamp) %></div>
-    <div class="column column-50" id="headers">
+<div class="col">
+
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><span class="badge badge-secondary"><%= @request.method %></span> <%= @request.request_path %></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><%= DateTime.to_iso8601(@request.timestamp) %></h6>
+    <p class="card-text">
+      <div class="row">
+        <div class="col-6">
         <details>
             <summary>Headers</summary>
             <%= inspect(@request.headers) %>
         </details>
-    </div>
-</div>
-<div class="row">
-    <div class="column column-50" id="ip"><%= inspect(@request.ip) %></div>
-    <div class="column column-50" id="query_params">
+        </div>
+        <div class="col-6">
         <details>
             <summary>Query params</summary>
-            <%= inspect(@request.query_params) %>
+            <pre class="bg-light"><code><%= @request.query_params %></code></pre>
         </details>
-    </div>
+        </div>
+      </div>
+      <details open>
+        <summary>Body</summary>
+        <samp><%= @request.body %></samp>
+      </details>
+    </p>
+  </div>
 </div>
-<div class="row">
-    <div class="column" id="body">
-        <pre><code><%= @request.body %></code></pre>
-    </div>
+
+</div>
 </div>
