@@ -3,7 +3,9 @@ defmodule LassoWeb.LassoController do
   alias Phoenix.LiveView.Controller
 
   def show(conn, %{"uuid" => uuid}) do
-    url = "http://localhost:4000/hooks/#{uuid}"
+    # url = LassoWeb.Endpoint.url() <> "/hooks/#{uuid}"
+    path = LassoWeb.Router.Helpers.hook_path(LassoWeb.Endpoint, :request, uuid)
+    url = "#{conn.scheme}://#{conn.host}:#{conn.port}#{path}"
 
     with {:ok, requests} <- Lasso.Hook.get(uuid) do
       Controller.live_render(conn, LassoWeb.LassoLiveView,
@@ -17,11 +19,9 @@ defmodule LassoWeb.LassoController do
 
   def new(conn, _params) do
     uuid = UUID.uuid4()
-    url = "http://localhost:4000/hooks/#{uuid}"
 
     with :ok <- Lasso.Hook.create(uuid) do
       redirect(conn, to: "/lasso/#{uuid}")
-      # live_render(conn, LassoWeb.LassoLiveView, session: %{url: url, uuid: uuid, requests: []})
     end
   end
 end

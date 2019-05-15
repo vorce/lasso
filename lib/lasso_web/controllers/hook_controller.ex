@@ -20,20 +20,4 @@ defmodule LassoWeb.HookController do
         resp(conn, 404, "")
     end
   end
-
-  def post(conn, params) do
-    conn
-  end
-
-  def put(conn, params) do
-    conn
-  end
-
-  def delete(conn, params) do
-    conn
-  end
-
-  def patch(conn, params) do
-    conn
-  end
 end
