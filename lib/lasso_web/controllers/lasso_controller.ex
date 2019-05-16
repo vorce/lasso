@@ -5,7 +5,7 @@ defmodule LassoWeb.LassoController do
   def show(conn, %{"uuid" => uuid}) do
     # url = LassoWeb.Endpoint.url() <> "/hooks/#{uuid}"
     path = LassoWeb.Router.Helpers.hook_path(LassoWeb.Endpoint, :request, uuid)
-    url = "#{conn.scheme}://#{conn.host}:#{conn.port}#{path}"
+    url = url(conn, path)
 
     with {:ok, requests} <- Lasso.Hook.get(uuid) do
       Controller.live_render(conn, LassoWeb.LassoLiveView,
@@ -24,4 +24,12 @@ defmodule LassoWeb.LassoController do
       redirect(conn, to: "/lasso/#{uuid}")
     end
   end
+
+  defp url(conn, path) do
+    "#{conn.scheme}://#{conn.host}#{port_str(conn)}#{path}"
+  end
+
+  defp port_str(%Plug.Conn{scheme: :https, port: port}) when port in [80, 443], do: ""
+  defp port_str(%Plug.Conn{scheme: :http, port: 80}), do: ""
+  defp port_str(%Plug.Conn{port: port}), do: ":#{port}"
 end

@@ -2,7 +2,7 @@
 
 Web hook UI powered by [Phoenix](https://phoenixframework.org/) and [LiveView](https://github.com/phoenixframework/phoenix_live_view).
 
-Try it on [http://lasso.gigalixirapp.com](http://lasso.gigalixirapp.com)
+Try it on [https://lasso.gigalixirapp.com](https://lasso.gigalixirapp.com)
 
 ## Start
 
