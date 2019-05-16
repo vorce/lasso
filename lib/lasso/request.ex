@@ -16,19 +16,22 @@ defmodule Lasso.Request do
       query_params: conn.query_params,
       headers: Enum.into(conn.req_headers, %{}),
       request_path: conn.request_path,
-      ip: formatted_ip(conn.remote_ip),
+      ip: formatted_ip(conn.remote_ip, Plug.Conn.get_req_header(conn, "x-forwarded-for")),
       body: conn.private[:raw_body] || ""
     }
   end
 
-  defp formatted_ip(ip) when is_tuple(ip) do
-    ip
-    |> Tuple.to_list()
-    |> Enum.join(".")
+  defp formatted_ip({a, b, c, d}, _) do
+    "#{a}.#{b}.#{c}.#{d}"
   end
 
-  defp formatted_ip(other) do
-    Logger.info("Got unexpected ip format: #{inspect(other)}")
-    inspect(other)
+  defp formatted_ip(ip, []) do
+    inspect(ip)
+  end
+
+  defp formatted_ip(_ip, forwarded_for) when is_list(forwarded_for) do
+    forwarded_for
+    |> Enum.reverse()
+    |> List.first()
   end
 end
