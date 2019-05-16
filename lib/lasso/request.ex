@@ -9,7 +9,8 @@ defmodule Lasso.Request do
             query_params: %{},
             request_path: "",
             timestamp: DateTime.utc_now(),
-            ip: ""
+            ip: "",
+            badge_class: ""
 
   def from(%Plug.Conn{} = conn) do
     %Lasso.Request{
@@ -19,9 +20,18 @@ defmodule Lasso.Request do
       headers: Enum.into(conn.req_headers, %{}),
       request_path: conn.request_path,
       ip: formatted_ip(conn.remote_ip, Plug.Conn.get_req_header(conn, @ip_header)),
-      body: conn.private[:raw_body] || ""
+      body: conn.private[:raw_body] || "",
+      badge_class: badge_classes(conn.method)
     }
   end
+
+  # Not sure about this one... should move into template or something.
+  def badge_classes(), do: "badge float-right"
+  def badge_classes("GET"), do: badge_classes() <> " badge-primary"
+  def badge_classes("POST"), do: badge_classes() <> " badge-success"
+  def badge_classes("PUT"), do: badge_classes() <> " badge-warning"
+  def badge_classes("DELETE"), do: badge_classes() <> " badge-danger"
+  def badge_classes("PATCH"), do: badge_classes() <> " badge-info"
 
   # TODO re-consider this IP stuff. Maybe worth to use https://github.com/ajvondrak/remote_ip
   # or something?

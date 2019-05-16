@@ -18,5 +18,14 @@ defmodule Lasso.RequestTest do
 
       assert %Request{ip: "84.216.227.220", method: "GET"} = Request.from(conn)
     end
+
+    test "creates struct with badge_class" do
+      conn = %Plug.Conn{
+        method: "GET"
+      }
+
+      assert %Request{badge_class: "badge float-right badge-primary", method: "GET"} =
+               Request.from(conn)
+    end
   end
 end

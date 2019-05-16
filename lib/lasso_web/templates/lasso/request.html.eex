@@ -4,7 +4,7 @@
 
 <div class="card mb-3">
   <div class="card-body">
-    <h5 class="card-title"><%= @request.request_path %> <span class="badge badge-secondary float-right"><%= @request.method %></span></h5>
+    <h5 class="card-title"><%= @request.request_path %> <span class="<%= @request.badge_class %>"><%= @request.method %></span></h5>
     <h6 class="card-subtitle mb-2 text-muted"><%= @request.ip %> <small><%= DateTime.to_iso8601(@request.timestamp) %></small></h6>
     <p class="card-text">
       <div class="row">

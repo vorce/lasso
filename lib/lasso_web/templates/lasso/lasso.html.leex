@@ -1,13 +1,12 @@
 <div class="row">
 <div class="col-11">
-    <p>
+    <p class="lead">
     This is your lasso, it will be alive for 24 hours.
     You can see any requests made to <a href="<%= @url %>"><%= @url %></a> here.
     </p>
     
     <p>
-    Ex:
-    <code>curl -XPOST '<%= @url %>?something=foo' -H 'Content-type: application/json' -d '{"hello": "world"}'</code>
+        <b>Example:</b> <code>curl -XPOST '<%= @url %>?something=foo' -H 'Content-type: application/json' -d '{"hello": "world"}'</code>
     </p>
 </div>
 </div>
