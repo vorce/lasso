@@ -4,20 +4,20 @@
 
 <div class="card mb-3">
   <div class="card-body">
-    <h5 class="card-title"><span class="badge badge-secondary"><%= @request.method %></span> <%= @request.request_path %></h5>
-    <h6 class="card-subtitle mb-2 text-muted"><%= DateTime.to_iso8601(@request.timestamp) %></h6>
+    <h5 class="card-title"><%= @request.request_path %> <span class="badge badge-secondary float-right"><%= @request.method %></span></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><%= @request.ip %> <small><%= DateTime.to_iso8601(@request.timestamp) %></small></h6>
     <p class="card-text">
       <div class="row">
         <div class="col-6">
         <details>
             <summary>Headers</summary>
-            <%= inspect(@request.headers) %>
+            <%= render "keyvalues.html", map: @request.headers %>
         </details>
         </div>
         <div class="col-6">
         <details>
             <summary>Query params</summary>
-            <pre class="bg-light"><code><%= @request.query_params %></code></pre>
+            <%= render "keyvalues.html", map: @request.query_params %>
         </details>
         </div>
       </div>

@@ -12,11 +12,7 @@
   <body>
     <header class="clearfix">
       <section class="container">
-        <!-- <h5 class="my-0 mr-md-auto font-weight-normal">
-            <a href="/" class="navbar-brand text-dark"><strong>Lasso</strong></a>
-          </h5> -->
-
-          <nav>
+        <nav>
           <ul class="nav nav-pills float-right">
             <li class="nav-item">
               <a class="nav-link text-secondary" href="https://github.com/vorce/lasso">Code</a>

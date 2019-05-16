@@ -5,5 +5,5 @@ defmodule Lasso.Request do
             query_params: %{},
             request_path: "",
             timestamp: DateTime.utc_now(),
-            ip: {}
+            ip: ""
 end

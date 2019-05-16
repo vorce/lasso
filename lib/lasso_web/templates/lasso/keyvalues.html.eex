@@ -1,0 +1,6 @@
+<dl class="row">
+    <%= for {key, value} <- @map do %>
+        <dt class="col-4" style="margin-bottom: 0"><span class="small"><b><%= key %></b></span></dt>
+        <dd class="col-8" style="margin-bottom: 0"><samp class="small"><%= value %></samp></dd>
+    <% end %>
+</dl>
