@@ -3,7 +3,6 @@ defmodule LassoWeb.LassoController do
   alias Phoenix.LiveView.Controller
 
   def show(conn, %{"uuid" => uuid}) do
-    # url = LassoWeb.Endpoint.url() <> "/hooks/#{uuid}"
     path = LassoWeb.Router.Helpers.hook_path(LassoWeb.Endpoint, :request, uuid)
     url = url(conn, path)
 
