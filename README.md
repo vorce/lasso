@@ -4,7 +4,7 @@ Inspect HTTP requests. Powered by [Phoenix](https://phoenixframework.org/) and [
 
 Try it on [https://lasso.gigalixirapp.com](https://lasso.gigalixirapp.com).
 
-Lasso is very much inspired by [webhookinbox.com](http://webhookinbox.com/) ([code](https://github.com/fanout/webhookinbox)).
+Lasso is very much inspired by [webhookinbox.com](http://webhookinbox.com/).
 
 ### A note on request headers
 
