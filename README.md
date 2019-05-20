@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/vorce/lasso.svg?style=svg)](https://circleci.com/gh/vorce/lasso)
+
 # Lasso
 
 Inspect HTTP requests. Powered by [Phoenix](https://phoenixframework.org/) and [LiveView](https://github.com/phoenixframework/phoenix_live_view).
