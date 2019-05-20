@@ -32,6 +32,8 @@ defmodule Lasso.Request do
   def badge_classes("PUT"), do: badge_classes() <> " badge-warning"
   def badge_classes("DELETE"), do: badge_classes() <> " badge-danger"
   def badge_classes("PATCH"), do: badge_classes() <> " badge-info"
+  def badge_classes("OPTIONS"), do: badge_classes() <> " badge-dark"
+  def badge_classes(_), do: badge_classes() <> " badge-secondary"
 
   # TODO re-consider this IP stuff. Maybe worth to use https://github.com/ajvondrak/remote_ip
   # or something?

@@ -30,5 +30,6 @@ defmodule LassoWeb.Router do
     post "/:uuid", HookController, :request
     delete "/:uuid", HookController, :request
     patch "/:uuid", HookController, :request
+    options "/:uuid", HookController, :request
   end
 end
