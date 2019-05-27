@@ -23,7 +23,7 @@
       </div>
       <details open>
         <summary>Body</summary>
-        <samp><%= @request.body %></samp>
+        <samp><pre><%= @request.body %></pre></samp>
       </details>
     </p>
   </div>

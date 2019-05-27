@@ -1,7 +1,9 @@
 defmodule Lasso.Request do
+  alias Plug.Conn
   require Logger
 
   @ip_header "x-original-forwarded-for"
+  @content_type "content-type"
 
   defstruct headers: [],
             method: "",
@@ -12,15 +14,15 @@ defmodule Lasso.Request do
             ip: "",
             badge_class: ""
 
-  def from(%Plug.Conn{} = conn) do
+  def from(%Conn{} = conn) do
     %Lasso.Request{
       timestamp: DateTime.utc_now(),
       method: conn.method,
       query_params: conn.query_params,
       headers: Enum.into(conn.req_headers, %{}),
       request_path: conn.request_path,
-      ip: formatted_ip(conn.remote_ip, Plug.Conn.get_req_header(conn, @ip_header)),
-      body: conn.private[:raw_body] || "",
+      ip: formatted_ip(conn.remote_ip, Conn.get_req_header(conn, @ip_header)),
+      body: formatted_body(conn.private[:raw_body], Conn.get_req_header(conn, @content_type)),
       badge_class: badge_classes(conn.method)
     }
   end
@@ -34,6 +36,29 @@ defmodule Lasso.Request do
   def badge_classes("PATCH"), do: badge_classes() <> " badge-info"
   def badge_classes("OPTIONS"), do: badge_classes() <> " badge-dark"
   def badge_classes(_), do: badge_classes() <> " badge-secondary"
+
+  defp formatted_body(nil, _), do: ""
+
+  defp formatted_body(body, [content_type]) when is_binary(body) do
+    case String.contains?(content_type, "application/json") do
+      true ->
+        pretty_json(body)
+
+      false ->
+        body
+    end
+  end
+
+  defp formatted_body(body, _), do: body
+
+  defp pretty_json(body) when is_binary(body) do
+    with {:ok, struct} <- Jason.decode(body),
+         {:ok, pretty} <- Jason.encode(struct, pretty: true) do
+      pretty
+    else
+      _other -> body
+    end
+  end
 
   # TODO re-consider this IP stuff. Maybe worth to use https://github.com/ajvondrak/remote_ip
   # or something?
