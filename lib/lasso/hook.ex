@@ -2,6 +2,8 @@ defmodule Lasso.Hook do
   @moduledoc """
   Contains state of all active hooks
   """
+  require Logger
+
   @cache_id :hook_cache
   @request_limit 100
 
@@ -39,7 +41,9 @@ defmodule Lasso.Hook do
     ConCache.update(@cache_id, uuid, fn val ->
       case val do
         nil -> {:ok, [request]}
-        val -> {:ok, Enum.take([request | val], @request_limit)}
+        val ->
+          Logger.info("#{uuid} has #{length(val)} existing entries")
+          {:ok, Enum.take([request | val], @request_limit)}
       end
     end)
   end

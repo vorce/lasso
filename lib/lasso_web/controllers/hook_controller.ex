@@ -10,7 +10,7 @@ defmodule LassoWeb.HookController do
       render(conn, "request.json", uuid: uuid)
     else
       {:error, :no_such_key, _} ->
-        resp(conn, 404, "")
+        resp(conn, 410, "No such lasso")
     end
   end
 end
