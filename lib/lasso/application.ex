@@ -9,7 +9,12 @@ defmodule Lasso.Application do
     # List all child processes to be supervised
     children = [
       {ConCache,
-       [name: :hook_cache, ttl_check_interval: :timer.minutes(10), global_ttl: :timer.hours(24)]},
+       [
+         name: :hook_cache,
+         ttl_check_interval: :timer.minutes(10),
+         global_ttl: :timer.hours(24),
+         ets_options: [:compressed]
+       ]},
 
       # Start the endpoint when the application starts
       LassoWeb.Endpoint
