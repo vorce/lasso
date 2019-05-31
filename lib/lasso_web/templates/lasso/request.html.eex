@@ -4,17 +4,18 @@
 
 <div class="card mb-3">
   <div class="card-body">
-    <h5 class="card-title"><%= @request.request_path %> <span class="<%= @request.badge_class %>"><%= @request.method %></span></h5>
-    <h6 class="card-subtitle mb-2 text-muted"><%= @request.ip %> <small><%= DateTime.to_iso8601(@request.timestamp) %></small></h6>
+    <h5 class="card-subtitle mb-2"><%= @request.ip %> <small class="text-muted"><%= DateTime.to_iso8601(@request.timestamp) %></small> <span class="<%= @request.badge_class %>"><%= @request.method %></span></h5>
     <p class="card-text">
       <div class="row">
-        <div class="col-6">
+        <div class="col-12">
         <details>
             <summary>Headers</summary>
             <%= render "keyvalues.html", map: @request.headers %>
         </details>
         </div>
-        <div class="col-6">
+      </div>
+      <div class="row">
+        <div class="col-12">
         <details>
             <summary>Query params</summary>
             <%= render "keyvalues.html", map: @request.query_params %>
