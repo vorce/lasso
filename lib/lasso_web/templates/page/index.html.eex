@@ -1,4 +1,10 @@
 <div class="jumbotron">
+<img class="img-fluid float-right mt-0 px-3"
+    src="/images/lasso.svg"
+    alt="lasso logo"
+    height="100px"
+    width="100px" />
+
   <p class="lead">
   A tool to visualize HTTP requests, specifically made for inspecting webhook callbacks.
   </p>

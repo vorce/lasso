@@ -2,6 +2,8 @@
 
 # Lasso
 
+<img src="assets/static/images/lasso.svg" width="100" height="100" alt="Lasso logo">
+
 Inspect HTTP requests. Powered by [Phoenix](https://phoenixframework.org/) and [LiveView](https://github.com/phoenixframework/phoenix_live_view).
 
 Try it on [https://lasso.gigalixirapp.com](https://lasso.gigalixirapp.com).
