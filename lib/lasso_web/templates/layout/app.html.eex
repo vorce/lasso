@@ -21,7 +21,7 @@
       <section class="container">
         <div class="inner">
           <nav class="nav nav-masthead float-right">
-            <a class="nav-link text-secondary" href="#">Code</a>
+            <a class="nav-link text-secondary" href="https://github.com/vorce/lasso">Code</a>
           </nav>
           <h2 class="masthead-brand font-weight-normal"><a href="/" class="text-dark"><strong>Lasso</strong></a></h3>
         </div>
