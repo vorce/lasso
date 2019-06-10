@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/vorce/lasso.svg?style=svg)](https://circleci.com/gh/vorce/lasso)
+[![CircleCI](https://circleci.com/gh/vorce/lasso.svg?style=svg)](https://circleci.com/gh/vorce/lasso) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=vorce/lasso)](https://dependabot.com)
 
 # Lasso
 
