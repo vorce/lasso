@@ -5,7 +5,7 @@ defmodule Lasso.MixProject do
     [
       app: :lasso,
       version: "0.1.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [warnings_as_errors: true],
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
@@ -33,7 +33,7 @@ defmodule Lasso.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.2"},
+      {:phoenix, "~> 1.4"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
