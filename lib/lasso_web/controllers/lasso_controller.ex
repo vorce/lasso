@@ -20,7 +20,7 @@ defmodule LassoWeb.LassoController do
     uuid = UUID.uuid4()
 
     with :ok <- Lasso.Hook.create(uuid) do
-      redirect(conn, to: "/lasso/#{uuid}")
+      redirect(conn, to: "/lasso/#{uuid}/view")
     end
   end
 

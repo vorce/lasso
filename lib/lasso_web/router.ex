@@ -19,12 +19,11 @@ defmodule LassoWeb.Router do
 
     get "/", PageController, :index
 
+    get "/lasso/:uuid/view", LassoController, :show
     post "/lasso/", LassoController, :new
-    get "/lasso/:uuid", LassoController, :show
   end
 
-  # Other scopes may use custom stacks.
-  scope "/hooks", LassoWeb do
+  scope "/lasso", LassoWeb do
     get "/:uuid", HookController, :request
     put "/:uuid", HookController, :request
     post "/:uuid", HookController, :request
@@ -32,4 +31,14 @@ defmodule LassoWeb.Router do
     patch "/:uuid", HookController, :request
     options "/:uuid", HookController, :request
   end
+
+  # Other scopes may use custom stacks.
+  # scope "/hooks", LassoWeb do
+  #   get "/:uuid", HookController, :request
+  #   put "/:uuid", HookController, :request
+  #   post "/:uuid", HookController, :request
+  #   delete "/:uuid", HookController, :request
+  #   patch "/:uuid", HookController, :request
+  #   options "/:uuid", HookController, :request
+  # end
 end
