@@ -15,7 +15,7 @@ Lasso is very much inspired by [webhookinbox.com](http://webhookinbox.com/).
 At the moment Lasso will display all headers it sees in the request, including ones added by things unrelated to the client making the request (such as load balancers, router etc that are infront of the deployed instance). This can be a bit confusing and something
 that I'd like to improve.
 
-## Start
+## Start locally
 
 - `mix deps.get`
 - `cd assets && npm install && cd ..`
