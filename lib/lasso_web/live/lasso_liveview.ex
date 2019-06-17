@@ -4,7 +4,7 @@ defmodule LassoWeb.LassoLiveView do
   require Logger
 
   def render(assigns) do
-    LassoWeb.LassoView.render("lasso.html", assigns)
+    LassoWeb.LassoViewView.render("lasso.html", assigns)
   end
 
   def mount(session, socket) do
