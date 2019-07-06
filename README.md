@@ -2,7 +2,7 @@
 
 # Lasso
 
-<img src="assets/static/images/lasso.svg" width="100" height="100" alt="Lasso logo">
+<img src="assets/static/images/lasso.svg" width="100" height="100" alt="Lasso logo" align="right" />
 
 Inspect HTTP requests. Powered by [Phoenix](https://phoenixframework.org/) and [LiveView](https://github.com/phoenixframework/phoenix_live_view).
 
