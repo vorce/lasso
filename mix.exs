@@ -5,7 +5,7 @@ defmodule Lasso.MixProject do
     [
       app: :lasso,
       version: "1.0.0",
-      elixir: "~> 1.8",
+      elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [warnings_as_errors: true],
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
