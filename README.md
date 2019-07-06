@@ -21,3 +21,14 @@ that I'd like to improve.
 - `cd assets && npm install && cd ..`
 - `iex -S mix phx.server`
 - Go to [`localhost:4000`](http://localhost:4000) in your browser
+
+## Building a release
+
+Yay for [releases](https://hexdocs.pm/mix/Mix.Tasks.Release.html) in Elixir 1.9.
+Phoenix has some [additional docs](https://github.com/phoenixframework/phoenix/blob/master/guides/deployment/releases.md) for being deployed in a release.
+
+```bash
+export SECRET_KEY_BASE=...
+APP_NAME=lasso MIX_ENV=prod SECRET_SALT=... mix release
+_build/prod/rel/lasso/bin/lasso start
+```
