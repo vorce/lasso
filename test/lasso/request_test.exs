@@ -6,7 +6,7 @@ defmodule Lasso.RequestTest do
   describe "from/1" do
     test "creates struct from conn" do
       conn = %Plug.Conn{remote_ip: {127, 0, 0, 1}, method: "GET"}
-      assert %Request{ip: "127.0.0.1", method: "GET"} = Request.from(conn)
+      assert %Request{ip: '::1', method: "GET"} = Request.from(conn)
     end
 
     test "creates struct from conn with x-original-forwarded-for header" do
