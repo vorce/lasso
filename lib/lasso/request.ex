@@ -63,8 +63,8 @@ defmodule Lasso.Request do
   # TODO re-consider this IP stuff. Maybe worth to use https://github.com/ajvondrak/remote_ip
   # or something?
 
-  defp formatted_ip({a, b, c, d}, []) do
-    "#{a}.#{b}.#{c}.#{d}"
+  defp formatted_ip(ip, []) when is_tuple(ip) do
+    :inet.ntoa({0, 0, 0, 0, 0, 0, 0, 1})
   end
 
   defp formatted_ip(ip, []) do

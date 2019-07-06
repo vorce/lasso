@@ -15,6 +15,7 @@ config :lasso, LassoWeb.Endpoint,
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   cache_static_manifest: "priv/static/cache_manifest.json",
+  check_origin: ["https://" <> System.get_env("APP_NAME") <> ".gigalixirapp.com", "//localhost"],
   server: true,
   pubsub: [name: Lasso.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [
