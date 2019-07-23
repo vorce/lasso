@@ -6,7 +6,7 @@
 
 Inspect HTTP requests. Powered by [Phoenix](https://phoenixframework.org/) and [LiveView](https://github.com/phoenixframework/phoenix_live_view).
 
-Try it on [https://lasso.gigalixirapp.com](https://lasso.gigalixirapp.com).
+**Try it on [https://lasso.gigalixirapp.com](https://lasso.gigalixirapp.com)**.
 
 Lasso is very much inspired by [webhookinbox.com](http://webhookinbox.com/).
 
