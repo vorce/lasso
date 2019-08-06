@@ -6,7 +6,7 @@ defmodule LassoWeb.AdminController do
   plug BasicAuth, use_config: {:lasso, :admin_area}
 
   def index(conn, _params) do
-    with {:ok, stats} <- Lasso.Hook.stats() do
+    with {:ok, stats} <- Lasso.stats() do
       Controller.live_render(
         conn,
         LassoWeb.AdminLiveView,

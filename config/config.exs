@@ -26,11 +26,12 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Admin page credentials
-config :basic_auth, my_auth_with_system: [
-  username: "admin",
-  password: {:system, "ADMIN_PASSWORD"},
-  realm: "Admin area"
-]
+config :basic_auth,
+  my_auth_with_system: [
+    username: "admin",
+    password: {:system, "ADMIN_PASSWORD"},
+    realm: "Admin area"
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -5,8 +5,8 @@ defmodule LassoWeb.LassoController do
   def request(conn, %{"uuid" => uuid}) do
     request = Lasso.Request.from(conn)
 
-    with {:ok, _value} <- Lasso.Hook.get(uuid),
-         :ok <- Lasso.Hook.add(uuid, request) do
+    with {:ok, _value} <- Lasso.get(uuid),
+         :ok <- Lasso.add(uuid, request) do
       render(conn, "request.json", uuid: uuid)
     else
       {:error, :no_such_key, _} ->

@@ -8,13 +8,17 @@ defmodule LassoWeb.AdminLiveView do
   end
 
   def mount(session, socket) do
-    #Lasso.Hook.subscribe(session.uuid)
-    {:ok, assign(socket, active_lassos: session.active_lassos, total_created_lassos: session.total_created_lassos)}
+    # Lasso.subscribe(session.uuid)
+    {:ok,
+     assign(socket,
+       active_lassos: session.active_lassos,
+       total_created_lassos: session.total_created_lassos
+     )}
   end
 
   def handle_info({Lasso.Hook, _uuid, _request}, _socket) do
-    #Logger.info("New request received for uuid: #{uuid}")
-    #all_requests = [request | socket.assigns.requests]
-    #{:noreply, assign(socket, :requests, all_requests)}
+    # Logger.info("New request received for uuid: #{uuid}")
+    # all_requests = [request | socket.assigns.requests]
+    # {:noreply, assign(socket, :requests, all_requests)}
   end
 end

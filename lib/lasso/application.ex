@@ -10,11 +10,11 @@ defmodule Lasso.Application do
     children = [
       {ConCache,
        [
-         name: :hook_cache,
+         name: :lasso_cache,
          ttl_check_interval: :timer.minutes(10),
          global_ttl: :timer.hours(24),
          ets_options: [:compressed],
-         callback: &Lasso.Hook.cache_callback/1
+         callback: &Lasso.cache_callback/1
        ]},
 
       # Start the endpoint when the application starts
