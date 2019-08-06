@@ -10,14 +10,12 @@ defmodule Lasso do
   @active_lassos_key :active_lassos
   @total_lassos_key :total_lassos
 
+  @admin_events "_admin_events"
+
   @topic inspect(__MODULE__)
 
   def subscribe(uuid) do
     Phoenix.PubSub.subscribe(Lasso.PubSub, @topic <> uuid)
-  end
-
-  defp notify_subscribers(uuid, request) do
-    Phoenix.PubSub.broadcast(Lasso.PubSub, @topic <> uuid, {__MODULE__, uuid, request})
   end
 
   @doc """
@@ -31,15 +29,27 @@ defmodule Lasso do
   defp update_stats() do
     ConCache.update(@cache_id, @active_lassos_key, fn val ->
       case val do
-        nil -> {:ok, 1}
-        val -> {:ok, val + 1}
+        nil ->
+          notify_subscribers(@admin_events, {:active_lassos, 1})
+          {:ok, 1}
+
+        val ->
+          active_lassos = val + 1
+          notify_subscribers(@admin_events, {:active_lassos, active_lassos})
+          {:ok, active_lassos}
       end
     end)
 
     ConCache.update(@cache_id, @total_lassos_key, fn val ->
       case val do
-        nil -> {:ok, 1}
-        val -> {:ok, val + 1}
+        nil ->
+          notify_subscribers(@admin_events, {:total_lassos, 1})
+          {:ok, 1}
+
+        val ->
+          total_lassos = val + 1
+          notify_subscribers(@admin_events, {:total_lassos, total_lassos})
+          {:ok, total_lassos}
       end
     end)
   end
@@ -63,6 +73,10 @@ defmodule Lasso do
     end
   end
 
+  defp notify_subscribers(uuid, data) do
+    Phoenix.PubSub.broadcast(Lasso.PubSub, @topic <> uuid, {__MODULE__, uuid, data})
+  end
+
   @doc """
   Delete a lasso
   """
@@ -78,8 +92,13 @@ defmodule Lasso do
   def cache_callback({:delete, _cache_pid, _key}) do
     ConCache.update(@cache_id, @active_lassos_key, fn val ->
       case val do
-        nil -> {:ok, 0}
-        val -> {:ok, max(0, val - 1)}
+        nil ->
+          {:ok, 0}
+
+        val ->
+          active_lassos = max(0, val - 1)
+          notify_subscribers(@admin_events, {:active_lassos, active_lassos})
+          {:ok, active_lassos}
       end
     end)
   end

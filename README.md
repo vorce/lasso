@@ -22,6 +22,10 @@ that I'd like to improve.
 - `iex -S mix phx.server`
 - Go to [`localhost:4000`](http://localhost:4000) in your browser
 
+### Admin area
+
+There is a minimal admin page where you can see some stats about current lassos on [/admin](http://localhost:4000/admin). This page is protected by basic auth, the credentials can be configured in `config.exs`. By default the password is read from the environment variable `ADMIN_PASSWORD`.
+
 ## Building a release
 
 Yay for [releases](https://hexdocs.pm/mix/Mix.Tasks.Release.html) in Elixir 1.9.

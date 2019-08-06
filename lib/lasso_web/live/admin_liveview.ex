@@ -3,22 +3,24 @@ defmodule LassoWeb.AdminLiveView do
 
   require Logger
 
+  @admin_events "_admin_events"
+
   def render(assigns) do
     LassoWeb.AdminView.render("index.html", assigns)
   end
 
   def mount(session, socket) do
-    # Lasso.subscribe(session.uuid)
+    Lasso.subscribe(@admin_events)
+
     {:ok,
-     assign(socket,
-       active_lassos: session.active_lassos,
-       total_lassos: session.total_lassos
-     )}
+     assign(socket, active_lassos: session.active_lassos, total_lassos: session.total_lassos)}
   end
 
-  def handle_info({Lasso.Hook, _uuid, _request}, _socket) do
-    # Logger.info("New request received for uuid: #{uuid}")
-    # all_requests = [request | socket.assigns.requests]
-    # {:noreply, assign(socket, :requests, all_requests)}
+  def handle_info({Lasso, @admin_events, {:active_lassos, active}}, socket) do
+    {:noreply, assign(socket, :active_lassos, active)}
+  end
+
+  def handle_info({Lasso, @admin_events, {:total_lassos, total}}, socket) do
+    {:noreply, assign(socket, :total_lassos, total)}
   end
 end
