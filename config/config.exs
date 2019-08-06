@@ -27,7 +27,7 @@ config :phoenix, :json_library, Jason
 
 # Admin page credentials
 config :basic_auth,
-  my_auth_with_system: [
+  admin_area: [
     username: "admin",
     password: {:system, "ADMIN_PASSWORD"},
     realm: "Admin area"

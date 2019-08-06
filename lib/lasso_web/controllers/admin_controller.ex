@@ -3,7 +3,7 @@ defmodule LassoWeb.AdminController do
   alias Phoenix.LiveView.Controller
   require Logger
 
-  plug BasicAuth, use_config: {:lasso, :admin_area}
+  plug BasicAuth, use_config: {:basic_auth, :admin_area}
 
   def index(conn, _params) do
     with {:ok, stats} <- Lasso.stats() do

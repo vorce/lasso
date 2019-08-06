@@ -12,7 +12,7 @@ defmodule LassoWeb.AdminLiveView do
     {:ok,
      assign(socket,
        active_lassos: session.active_lassos,
-       total_created_lassos: session.total_created_lassos
+       total_lassos: session.total_lassos
      )}
   end
 

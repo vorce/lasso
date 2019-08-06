@@ -18,6 +18,7 @@ defmodule LassoWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/admin", AdminController, :index
 
     get "/lasso/:uuid/view", LassoViewController, :show
     post "/lasso/", LassoViewController, :new
