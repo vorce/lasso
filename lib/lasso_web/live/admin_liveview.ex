@@ -16,11 +16,8 @@ defmodule LassoWeb.AdminLiveView do
      assign(socket, active_lassos: session.active_lassos, total_lassos: session.total_lassos)}
   end
 
-  def handle_info({Lasso, @admin_events, {:active_lassos, active}}, socket) do
-    {:noreply, assign(socket, :active_lassos, active)}
-  end
-
-  def handle_info({Lasso, @admin_events, {:total_lassos, total}}, socket) do
-    {:noreply, assign(socket, :total_lassos, total)}
+  def handle_info({Lasso, @admin_events, {:stats, stats}}, socket) do
+    {:noreply,
+     assign(socket, active_lassos: stats.active_lassos, total_lassos: stats.total_lassos)}
   end
 end

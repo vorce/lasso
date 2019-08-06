@@ -29,29 +29,19 @@ defmodule Lasso do
   defp update_stats() do
     ConCache.update(@cache_id, @active_lassos_key, fn val ->
       case val do
-        nil ->
-          notify_subscribers(@admin_events, {:active_lassos, 1})
-          {:ok, 1}
-
-        val ->
-          active_lassos = val + 1
-          notify_subscribers(@admin_events, {:active_lassos, active_lassos})
-          {:ok, active_lassos}
+        nil -> {:ok, 1}
+        val -> {:ok, val + 1}
       end
     end)
 
     ConCache.update(@cache_id, @total_lassos_key, fn val ->
       case val do
-        nil ->
-          notify_subscribers(@admin_events, {:total_lassos, 1})
-          {:ok, 1}
-
-        val ->
-          total_lassos = val + 1
-          notify_subscribers(@admin_events, {:total_lassos, total_lassos})
-          {:ok, total_lassos}
+        nil -> {:ok, 1}
+        val -> {:ok, val + 1}
       end
     end)
+
+    notify_stats()
   end
 
   @doc """
@@ -92,15 +82,12 @@ defmodule Lasso do
   def cache_callback({:delete, _cache_pid, _key}) do
     ConCache.update(@cache_id, @active_lassos_key, fn val ->
       case val do
-        nil ->
-          {:ok, 0}
-
-        val ->
-          active_lassos = max(0, val - 1)
-          notify_subscribers(@admin_events, {:active_lassos, active_lassos})
-          {:ok, active_lassos}
+        nil -> {:ok, 0}
+        val -> {:ok, max(0, val - 1)}
       end
     end)
+
+    notify_stats()
   end
 
   @doc """
@@ -110,6 +97,12 @@ defmodule Lasso do
     active_lassos = ConCache.get(@cache_id, @active_lassos_key) || 0
     total_lassos = ConCache.get(@cache_id, @total_lassos_key) || 0
     {:ok, %{active_lassos: active_lassos, total_lassos: total_lassos}}
+  end
+
+  defp notify_stats() do
+    with {:ok, stats} <- stats() do
+      notify_subscribers(@admin_events, {:stats, stats})
+    end
   end
 
   defp update(uuid, request) do
