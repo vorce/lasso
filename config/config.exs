@@ -25,6 +25,13 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Admin page credentials
+config :basic_auth, my_auth_with_system: [
+  username: "admin",
+  password: {:system, "ADMIN_PASSWORD"},
+  realm: "Admin area"
+]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

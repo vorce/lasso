@@ -7,6 +7,9 @@ defmodule Lasso.Hook do
   @cache_id :hook_cache
   @request_limit 100
 
+  @active_lassos_key :active_lassos
+  @total_lassos_key :total_lassos
+
   @topic inspect(__MODULE__)
 
   def subscribe(uuid) do
@@ -22,8 +25,28 @@ defmodule Lasso.Hook do
   """
   def create(uuid) do
     ConCache.put(@cache_id, uuid, [])
+    update_stats()
+  end
+  
+  defp update_stats() do
+    ConCache.update(@cache_id, @active_lassos_key, fn val ->
+      case val do
+        nil -> {:ok, 1}
+        val -> {:ok, val + 1}
+      end
+    end)
+    
+    ConCache.update(@cache_id, @total_lassos_key, fn val ->
+      case val do
+        nil -> {:ok, 1}
+        val -> {:ok, val + 1}
+      end
+    end)
   end
 
+  @doc """
+  Get all the requests for a hook
+  """
   def get(uuid) do
     case ConCache.get(@cache_id, uuid) do
       nil -> {:error, :no_such_key, uuid}
@@ -31,12 +54,44 @@ defmodule Lasso.Hook do
     end
   end
 
+  @doc """
+  Append a request to a hook
+  """
   def add(uuid, request) do
     with :ok <- update(uuid, request) do
       notify_subscribers(uuid, request)
     end
   end
+  
+  @doc """
+  Delete a hook
+  """
+  def delete(uuid) do
+    ConCache.delete(@cache_id, uuid)
+  end
+  
+  @doc """
+  Used to update stats for every cache delete
+  """
+  def cache_callback({:update, _cache_pid, _key, _value}), do: :ok
+  def cache_callback({:delete, _cache_pid, _key}) do
+    ConCache.update(@cache_id, @active_lassos_key, fn val ->
+      case val do
+        nil -> {:ok, 0}
+        val -> {:ok, max(0, val - 1)}
+      end
+    end)
+  end
 
+  @doc """
+  Get statistics about hooks
+  """
+  def stats() do
+    active_lassos = ConCache.get(@cache_id, @active_lassos_key) || 0
+    total_lassos = ConCache.get(@cache_id, @total_lassos_key) || 0
+    {:ok, %{active_lassos: active_lassos, total_lassos: total_lassos}}
+  end
+  
   defp update(uuid, request) do
     ConCache.update(@cache_id, uuid, fn val ->
       case val do
