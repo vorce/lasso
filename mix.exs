@@ -43,7 +43,8 @@ defmodule Lasso.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:elixir_uuid, "~> 1.2"},
       {:con_cache, "~> 0.13"},
-      {:basic_auth, "~> 2.2"}
+      {:basic_auth, "~> 2.2"},
+      {:telemetry, "~> 0.4"}
     ]
   end
 end

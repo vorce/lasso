@@ -52,6 +52,10 @@ defmodule Lasso do
           {:ok, total_lassos}
       end
     end)
+
+    with {:ok, stats} <- stats() do
+      :telemetry.execute([:lasso, :created], stats)
+    end
   end
 
   @doc """

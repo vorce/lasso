@@ -23,6 +23,13 @@ defmodule Lasso.Application do
       # {Lasso.Worker, arg},
     ]
 
+    :telemetry.attach(
+      "LassoWeb.AdminLiveView",
+      [:lasso, :created],
+      &LassoWeb.AdminLiveView.handle_event/4,
+      nil
+    )
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Lasso.Supervisor]
