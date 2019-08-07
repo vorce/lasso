@@ -44,7 +44,8 @@ defmodule Lasso.MixProject do
       {:elixir_uuid, "~> 1.2"},
       {:con_cache, "~> 0.13"},
       {:basic_auth, "~> 2.2"},
-      {:credo, "~> 1.1", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:sobelow, "~> 0.8", only: :dev, runtime: false}
     ]
   end
 end
