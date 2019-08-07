@@ -7,7 +7,10 @@ defmodule LassoWeb.Router do
     plug :fetch_flash
     plug Phoenix.LiveView.Flash
     plug :protect_from_forgery
-    plug :put_secure_browser_headers
+
+    plug :put_secure_browser_headers, %{
+      "content-security-policy" => "script-src 'self' 'unsafe-eval'; img-src 'self'"
+    }
   end
 
   pipeline :api do
