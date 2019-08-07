@@ -43,6 +43,16 @@ defmodule Lasso.LassoTest do
   end
 
   describe "delete/1" do
+    test "removes lasso" do
+      lasso_id = "foo"
+      Lasso.create(lasso_id)
+
+      assert Lasso.get(lasso_id) == {:ok, []}
+
+      Lasso.delete(lasso_id)
+
+      assert Lasso.get(lasso_id) == {:error, :no_such_key, lasso_id}
+    end
   end
 
   describe "stats/0" do

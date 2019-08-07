@@ -8,3 +8,11 @@ config :lasso, LassoWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Admin page credentials for tests
+config :basic_auth,
+  admin_area: [
+    username: "admin",
+    password: "test",
+    realm: "Admin area"
+  ]
