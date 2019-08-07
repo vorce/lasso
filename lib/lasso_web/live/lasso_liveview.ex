@@ -8,11 +8,11 @@ defmodule LassoWeb.LassoLiveView do
   end
 
   def mount(session, socket) do
-    Lasso.Hook.subscribe(session.uuid)
+    Lasso.subscribe(session.uuid)
     {:ok, assign(socket, requests: session.requests, url: session.url, uuid: session.uuid)}
   end
 
-  def handle_info({Lasso.Hook, uuid, request}, socket) do
+  def handle_info({Lasso, uuid, request}, socket) do
     Logger.info("New request received for uuid: #{uuid}")
     all_requests = [request | socket.assigns.requests]
     {:noreply, assign(socket, :requests, all_requests)}

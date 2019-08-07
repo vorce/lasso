@@ -6,7 +6,7 @@ defmodule LassoWeb.LassoViewController do
     path = LassoWeb.Router.Helpers.lasso_path(LassoWeb.Endpoint, :request, uuid)
     url = url(conn, path)
 
-    with {:ok, requests} <- Lasso.Hook.get(uuid) do
+    with {:ok, requests} <- Lasso.get(uuid) do
       Controller.live_render(conn, LassoWeb.LassoLiveView,
         session: %{url: url, uuid: uuid, requests: requests}
       )
@@ -19,7 +19,7 @@ defmodule LassoWeb.LassoViewController do
   def new(conn, _params) do
     uuid = UUID.uuid4()
 
-    with :ok <- Lasso.Hook.create(uuid) do
+    with :ok <- Lasso.create(uuid) do
       redirect(conn, to: "/lasso/#{uuid}/view")
     end
   end

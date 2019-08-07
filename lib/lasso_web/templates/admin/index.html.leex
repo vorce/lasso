@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-12">
+        <p class="lead">Hello Admin ✨</p>
+        <p>Here's some useful information for you (updated live!)</p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-12" id="stats">
+
+        <div class="card-group">
+            <div class="card mb-3">
+                <div class="card-header">Active lassos</div>
+                <div class="card-body">
+                    <p class="card-text small">Number of lassos that are active right now</p>
+                    <h1 class="card-title float-right"><%= @active_lassos %></h1>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">Total lassos</div>
+                <div class="card-body">
+                    <p class="card-text small">Number of lassos created since last reboot</p>
+                    <h1 class="card-title float-right"><%= @total_lassos %></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
