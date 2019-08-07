@@ -6,11 +6,14 @@ defmodule LassoWeb.LassoViewController do
     path = LassoWeb.Router.Helpers.lasso_path(LassoWeb.Endpoint, :request, uuid)
     url = url(conn, path)
 
-    with {:ok, requests} <- Lasso.get(uuid) do
-      Controller.live_render(conn, LassoWeb.LassoLiveView,
-        session: %{url: url, uuid: uuid, requests: requests}
-      )
-    else
+    case Lasso.get(uuid) do
+      {:ok, requests} ->
+        Controller.live_render(
+          conn,
+          LassoWeb.LassoLiveView,
+          session: %{url: url, uuid: uuid, requests: requests}
+        )
+
       {:error, :no_such_key, _} ->
         render(conn, "404.html")
     end

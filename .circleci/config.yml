@@ -15,6 +15,7 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - run: mix deps.get
+      - run: mix credo
       - run: mix test
       #- restore_cache:
       #    key: v1-lasso-dialyzer-cache-{{ checksum "mix.lock" }}

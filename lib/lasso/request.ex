@@ -1,4 +1,8 @@
 defmodule Lasso.Request do
+  @moduledoc """
+  Represents an incoming request to a lasso
+  """
+
   alias Plug.Conn
   require Logger
 
@@ -60,7 +64,7 @@ defmodule Lasso.Request do
     end
   end
 
-  # TODO re-consider this IP stuff. Maybe worth to use https://github.com/ajvondrak/remote_ip
+  # Reconsider this IP stuff. Maybe worth to use https://github.com/ajvondrak/remote_ip
   # or something?
 
   defp formatted_ip(ip, []) when is_tuple(ip) do
