@@ -55,6 +55,25 @@ defmodule Lasso.LassoTest do
     end
   end
 
+  describe "clear/1" do
+    test "empties the requests in lasso" do
+      lasso_id = "foo"
+
+      Lasso.create(lasso_id)
+      Lasso.add(lasso_id, %{id: 1})
+      Lasso.add(lasso_id, %{id: 1})
+
+      assert {:ok, [_one, _two]} = Lasso.get(lasso_id)
+
+      assert Lasso.clear(lasso_id) == :ok
+      assert Lasso.get(lasso_id) == {:ok, []}
+    end
+
+    test "fails on unknown lasso" do
+      assert {:error, :no_such_key, _} = Lasso.clear("unknown")
+    end
+  end
+
   describe "stats/0" do
     test "returns active lassos" do
       Lasso.create("1")

@@ -3,7 +3,7 @@ defmodule LassoWeb.AdminLiveView do
 
   require Logger
 
-  @admin_events "_admin_events"
+  @admin_events Application.get_env(:lasso, Lasso)[:admin_events_topic]
 
   def render(assigns) do
     LassoWeb.AdminView.render("index.html", assigns)

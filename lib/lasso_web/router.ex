@@ -9,7 +9,8 @@ defmodule LassoWeb.Router do
     plug :protect_from_forgery
 
     plug :put_secure_browser_headers, %{
-      "content-security-policy" => "script-src 'self' 'unsafe-eval'; img-src 'self'"
+      "content-security-policy" =>
+        "script-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self'"
     }
   end
 
@@ -23,8 +24,10 @@ defmodule LassoWeb.Router do
     get "/", PageController, :index
     get "/admin", AdminController, :index
 
+    delete "/admin/lasso/:uuid", LassoViewController, :delete
+    post "/admin/lasso/", LassoViewController, :new
+
     get "/lasso/:uuid/view", LassoViewController, :show
-    post "/lasso/", LassoViewController, :new
   end
 
   scope "/lasso", LassoWeb do

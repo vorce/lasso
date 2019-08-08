@@ -27,6 +27,14 @@ defmodule LassoWeb.LassoViewController do
     end
   end
 
+  def delete(conn, %{"uuid" => uuid}) do
+    with :ok <- Lasso.delete(uuid) do
+      conn
+      |> put_flash(:info, "Successfully deleted lasso: #{uuid}")
+      |> redirect(to: "/")
+    end
+  end
+
   defp url(conn, path) do
     "#{conn.scheme}://#{conn.host}#{port_str(conn)}#{path}"
   end
