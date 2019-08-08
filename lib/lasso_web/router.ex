@@ -23,11 +23,11 @@ defmodule LassoWeb.Router do
 
     get "/", PageController, :index
     get "/admin", AdminController, :index
+
     delete "/admin/lasso/:uuid", LassoViewController, :delete
-    # post "/admin/lasso/", LassoViewController, :new
+    post "/admin/lasso/", LassoViewController, :new
 
     get "/lasso/:uuid/view", LassoViewController, :show
-    post "/lasso/", LassoViewController, :new
   end
 
   scope "/lasso", LassoWeb do
