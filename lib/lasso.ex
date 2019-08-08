@@ -21,9 +21,10 @@ defmodule Lasso do
   @doc """
   Create a new lasso that we need to keep track of
   """
-  def create(uuid) do
-    ConCache.put(@cache_id, uuid, [])
-    update_stats()
+  def create(uuid, opts \\ [update_stats: true]) do
+    result = ConCache.put(@cache_id, uuid, [])
+    if opts[:update_stats], do: update_stats()
+    result
   end
 
   defp update_stats() do
@@ -80,7 +81,7 @@ defmodule Lasso do
   """
   def clear(uuid) do
     with {:ok, _} <- get(uuid),
-         :ok <- create(uuid) do
+         :ok <- create(uuid, update_stats: false) do
       notify_subscribers(uuid, :clear)
     end
   end

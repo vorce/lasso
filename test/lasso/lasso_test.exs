@@ -92,5 +92,14 @@ defmodule Lasso.LassoTest do
 
       assert {:ok, %{total_lassos: 3}} = Lasso.stats()
     end
+
+    test "is not affected by clear/1" do
+      lasso_id = "stats"
+
+      Lasso.create(lasso_id)
+      Lasso.clear(lasso_id)
+
+      assert Lasso.stats() == {:ok, %{total_lassos: 1, active_lassos: 1}}
+    end
   end
 end
