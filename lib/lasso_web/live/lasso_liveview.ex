@@ -26,7 +26,7 @@ defmodule LassoWeb.LassoLiveView do
       error ->
         put_flash(socket, :error, "Failed to delete lasso #{uuid}, due to: #{inspect(error)}")
     end
-    {:noreply, redirect(socket, to: "/")}
+    {:stop, redirect(socket, to: "/")}
   end
 
   def handle_event("clear", uuid, socket) do
