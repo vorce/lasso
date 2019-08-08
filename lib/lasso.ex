@@ -75,6 +75,16 @@ defmodule Lasso do
   end
 
   @doc """
+  Clear all requests for a lasso
+  """
+  def clear(uuid) do
+    case get(uuid) do
+      {:ok, _} -> create(uuid)
+      error -> error
+    end
+  end
+
+  @doc """
   Used to update stats for every lasso delete (regardless if it's due to ttl or the `delete/1` function)
   """
   def cache_callback({:update, _cache_pid, _key, _value}), do: :ok
