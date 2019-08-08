@@ -4,13 +4,13 @@ defmodule Lasso do
   """
   require Logger
 
-  @cache_id :lasso_cache
-  @request_limit 100
+  @cache_id Application.get_env(:lasso, Lasso)[:cache_name]
+  @request_limit Application.get_env(:lasso, Lasso)[:max_requests_per_lasso]
 
   @active_lassos_key :active_lassos
   @total_lassos_key :total_lassos
 
-  @admin_events "_admin_events"
+  @admin_events Application.get_env(:lasso, Lasso)[:admin_events_topic]
 
   @topic inspect(__MODULE__)
 
@@ -59,7 +59,7 @@ defmodule Lasso do
   """
   def add(uuid, request) do
     with :ok <- update(uuid, request) do
-      notify_subscribers(uuid, request)
+      notify_subscribers(uuid, {:request, request})
     end
   end
 
@@ -78,9 +78,9 @@ defmodule Lasso do
   Clear all requests for a lasso
   """
   def clear(uuid) do
-    case get(uuid) do
-      {:ok, _} -> create(uuid)
-      error -> error
+    with {:ok, _} <- get(uuid),
+         :ok <- create(uuid) do
+      notify_subscribers(uuid, :clear)
     end
   end
 

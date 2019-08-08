@@ -33,6 +33,11 @@ config :basic_auth,
     realm: "Admin area"
   ]
 
+config :lasso, Lasso,
+  admin_events_topic: "_admin_events",
+  max_requests_per_lasso: 100,
+  cache_name: :lasso_cache
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

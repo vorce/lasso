@@ -3,6 +3,8 @@ defmodule LassoWeb.LassoLiveView do
 
   require Logger
 
+  @request_limit Application.get_env(:lasso, Lasso)[:max_requests_per_lasso]
+
   def render(assigns) do
     LassoWeb.LassoViewView.render("lasso.html", assigns)
   end
@@ -12,10 +14,14 @@ defmodule LassoWeb.LassoLiveView do
     {:ok, assign(socket, requests: session.requests, url: session.url, uuid: session.uuid)}
   end
 
-  def handle_info({Lasso, uuid, request}, socket) do
+  def handle_info({Lasso, uuid, {:request, request}}, socket) do
     Logger.debug("New request received for uuid: #{uuid}")
-    all_requests = [request | socket.assigns.requests]
+    all_requests = Enum.take([request | socket.assigns.requests], @request_limit)
     {:noreply, assign(socket, :requests, all_requests)}
+  end
+
+  def handle_info({Lasso, _uuid, :clear}, socket) do
+    {:noreply, assign(socket, :requests, [])}
   end
 
   def handle_event("delete", uuid, socket) do
