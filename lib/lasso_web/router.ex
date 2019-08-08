@@ -9,7 +9,8 @@ defmodule LassoWeb.Router do
     plug :protect_from_forgery
 
     plug :put_secure_browser_headers, %{
-      "content-security-policy" => "script-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self'"
+      "content-security-policy" =>
+        "script-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self'"
     }
   end
 
