@@ -4,7 +4,7 @@ defmodule Lasso.MixProject do
   def project do
     [
       app: :lasso,
-      version: "1.2.0",
+      version: "1.3.0",
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [warnings_as_errors: true],
