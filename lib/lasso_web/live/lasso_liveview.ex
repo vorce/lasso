@@ -14,19 +14,16 @@ defmodule LassoWeb.LassoLiveView do
     {:ok, assign(socket, requests: session.requests, url: session.url, uuid: session.uuid)}
   end
 
-  def handle_info({Lasso, uuid, {:request, request}}, socket) do
-    Logger.debug("New request received for uuid: #{uuid}")
+  def handle_info({Lasso, _uuid, {:request, request}}, socket) do
     all_requests = Enum.take([request | socket.assigns.requests], @request_limit)
     {:noreply, assign(socket, :requests, all_requests)}
   end
 
-  def handle_info({Lasso, uuid, :clear}, socket) do
-    socket = clear(socket, uuid)
+  def handle_info({Lasso, _uuid, :clear}, socket) do
     {:noreply, assign(socket, :requests, [])}
   end
 
-  def handle_info({Lasso, uuid, :delete}, socket) do
-    socket = delete(socket, uuid)
+  def handle_info({Lasso, _uuid, :delete}, socket) do
     {:stop, redirect(socket, to: "/")}
   end
 
@@ -44,15 +41,21 @@ defmodule LassoWeb.LassoLiveView do
 
   defp clear(socket, uuid) do
     case Lasso.clear(uuid) do
-      :ok -> put_flash(socket, :info, "Successfully cleared lasso: #{uuid}")
-      error -> put_flash(socket, :error, "Failed to clear lasso #{uuid}, due to: #{inspect(error)}")
+      :ok ->
+        put_flash(socket, :info, "Successfully cleared lasso: #{uuid}")
+
+      error ->
+        put_flash(socket, :error, "Failed to clear lasso #{uuid}, due to: #{inspect(error)}")
     end
   end
 
   defp delete(socket, uuid) do
     case Lasso.delete(uuid) do
-      :ok -> put_flash(socket, :info, "Successfully deleted lasso: #{uuid}")
-      error -> put_flash(socket, :error, "Failed to delete lasso #{uuid}, due to: #{inspect(error)}")
+      :ok ->
+        put_flash(socket, :info, "Successfully deleted lasso: #{uuid}")
+
+      error ->
+        put_flash(socket, :error, "Failed to delete lasso #{uuid}, due to: #{inspect(error)}")
     end
   end
 end

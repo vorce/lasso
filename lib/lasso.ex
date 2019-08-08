@@ -72,6 +72,7 @@ defmodule Lasso do
   """
   def delete(uuid) do
     ConCache.delete(@cache_id, uuid)
+    notify_subscribers(uuid, :delete)
   end
 
   @doc """

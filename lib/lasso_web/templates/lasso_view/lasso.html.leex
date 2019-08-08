@@ -5,15 +5,15 @@
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group btn-group-justified" role="group">
                     <div class="btn-group" role="group">
-                        <button id="link" class="btn btn-primary" data-original-title="Link" onclick="navigator.clipboard.writeText('<%= @url %>');"><img src="/images/link.svg" title="Copy lasso link to clipboard"></button>
+                        <button id="link" class="btn btn-info" data-original-title="Link" onclick="navigator.clipboard.writeText('<%= @url %>');"><img src="/images/link.svg" title="Copy lasso link to clipboard"></button>
                     </div>
 
                     <div class="btn-group" role="group">
-                        <button id="clear" class="btn btn-warning" data-original-title="Clear" phx-click="clear" phx-value="<%= @uuid %>"><img src="/images/cancel.svg" title="Clear all current requests in the lasso"></button>
+                        <button id="clear" class="btn btn-dark" data-original-title="Clear" phx-click="clear" phx-value="<%= @uuid %>"><img src="/images/cancel.svg" title="Clear all current requests in the lasso"></button>
                     </div>
                     
                     <div class="btn-group" role="group">
-                        <button id="delete" class="btn btn-danger" data-original-title="Delete" phx-click="delete" phx-value="<%= @uuid %>"><img src="/images/bin.svg" title="Delete this lasso"></button>
+                        <button id="delete" class="btn btn-danger" data-original-title="Delete" data-confirm="Are you sure?" phx-click="delete" phx-value="<%= @uuid %>"><img src="/images/bin.svg" title="Delete this lasso"></button>
                     </div>
                 </div>
             </div>
