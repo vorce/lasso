@@ -13,7 +13,7 @@ defmodule LassoWeb.LassoLiveView do
   end
 
   def handle_info({Lasso, uuid, request}, socket) do
-    Logger.info("New request received for uuid: #{uuid}")
+    Logger.debug("New request received for uuid: #{uuid}")
     all_requests = [request | socket.assigns.requests]
     {:noreply, assign(socket, :requests, all_requests)}
   end

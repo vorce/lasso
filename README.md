@@ -8,7 +8,10 @@ Inspect HTTP requests. Powered by [Phoenix](https://phoenixframework.org/) and [
 
 **Try it on [https://lasso.gigalixirapp.com](https://lasso.gigalixirapp.com)**.
 
-Lasso is very much inspired by [webhookinbox.com](http://webhookinbox.com/).
+### Thank you
+
+- [webhookinbox.com](http://webhookinbox.com/) - inspiration for the whole project
+- [ikonate](https://ikonate.com/) - beautiful svg icons
 
 ### A note on request headers
 
