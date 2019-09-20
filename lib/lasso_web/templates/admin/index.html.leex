@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12">
-        <p class="lead">Hello Admin ✨</p>
-        <p>Here's some useful information for you (updated live!)</p>
+        <h2>Hello Admin ✨</h2>
+        <p class="lead">Here's some useful information for you (updated live!)</p>
     </div>
 </div>
 
@@ -10,18 +10,18 @@
 
         <div class="card-group">
             <div class="card mb-3">
-                <div class="card-header">Active lassos</div>
+                <h3 class="card-header">Active lassos</h3>
                 <div class="card-body">
-                    <p class="card-text small">Number of lassos that are active right now</p>
-                    <h1 class="card-title float-right"><%= @active_lassos %></h1>
+                    <p class="card-text">Number of lassos that are active right now</p>
+                    <span class="card-title float-right" style="font-size: 3em;"><%= @active_lassos %></span>
                 </div>
             </div>
 
             <div class="card mb-3">
-                <div class="card-header">Total lassos</div>
+                <h3 class="card-header">Total lassos</h3>
                 <div class="card-body">
-                    <p class="card-text small">Number of lassos created since last reboot</p>
-                    <h1 class="card-title float-right"><%= @total_lassos %></h1>
+                    <p class="card-text">Number of lassos created since last reboot</p>
+                    <span class="card-title float-right" style="font-size: 3em;"><%= @total_lassos %></span>
                 </div>
             </div>
         </div>

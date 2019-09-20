@@ -17,18 +17,18 @@
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
-    <header class="masthead mb-auto clearfix">
+    <header class="masthead mb-auto clearfix" role="banner" aria-label="Header">
       <section class="container">
-        <div class="inner">
+        <div class="inner" role="navigation" aria-label="Navigation">
           <nav class="nav nav-masthead float-right">
             <a class="nav-link text-secondary" href="https://github.com/vorce/lasso">Code</a>
           </nav>
-          <h2 class="masthead-brand font-weight-normal"><a href="/" class="text-dark"><strong>Lasso</strong></a> <small class="text-muted font-weight-lighter"><%= :application.get_key(:lasso, :vsn) |> elem(1) %></small></h2>
+          <h1 class="masthead-brand font-weight-normal" style="font-size: 2rem;"><a href="/" class="text-dark"><strong>Lasso</strong></a> <small class="text-muted font-weight-lighter"><%= :application.get_key(:lasso, :vsn) |> elem(1) %></small></h1>
         </div>
       </section>
     </header>
 
-    <main role="main" class="container">
+    <main role="main" class="container" aria-label="Main content">
       <%= unless is_nil(get_flash(@conn, :info)) do %>
         <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <% end %>
