@@ -2,7 +2,7 @@
 <div class="row">
 <div class="col">
 
-<div class="card mb-3">
+<div class="card mb-3" role="article" aria-label="Request details">
   <div class="card-body">
     <h5 class="card-subtitle mb-2">Request from: <%= @request.ip %> <small class="text-muted"><%= DateTime.to_iso8601(@request.timestamp) %></small> <span class="<%= @request.badge_class %>"><%= @request.method %></span></h5>
     <p class="card-text">
