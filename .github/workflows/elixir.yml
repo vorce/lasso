@@ -23,6 +23,8 @@ jobs:
       run: mix sobelow --exit
     - name: Run Tests
       run: mix test
+    - name: Debug
+      run: echo Hello, ref ${{ github.ref }}
     - uses: chrnorm/deployment-action@releases/v1
       name: Create GitHub deployment
       if: github.ref == 'deploy_action'
@@ -43,7 +45,7 @@ jobs:
       if: github.ref == 'deploy_action' && success()
       uses: chrnorm/deployment-status@releases/v1
       with:
-        token: "${{ github.token }}"
+        token: "${{ secrets.GITHUB_TOKEN }}"
         target-url: https://lasso.gigalixirapp.com/
         state: "success"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
@@ -51,7 +53,7 @@ jobs:
       if: github.ref == 'deploy_action' && failure()
       uses: chrnorm/deployment-status@releases/v1
       with:
-        token: "${{ github.token }}"
+        token: "${{ secrets.GITHUB_TOKEN }}"
         target-url: https://lasso.gigalixirapp.com/
         state: "failure"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
