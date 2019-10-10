@@ -27,14 +27,14 @@ jobs:
       run: echo Hello, ref ${{ github.ref }}
     - uses: chrnorm/deployment-action@releases/v1
       name: Create GitHub deployment
-      if: github.ref == 'deploy_action'
+      if: github.ref == 'refs/heads/deploy_action'
       id: deployment
       with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           target-url: https://lasso.gigalixirapp.com/
           environment: production
     - name: Deploy to Gigalixir
-      if: github.ref == 'deploy_action'
+      if: github.ref == 'refs/heads/deploy_action'
       uses: srt32/git-actions@v0.0.3
       env:
         GIGALIXIR_TOKEN: ${{ secrets.GIGALIXIR_TOKEN }}
@@ -42,7 +42,7 @@ jobs:
       with:
         args: git remote set-url --push origin https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git
     - name: Update deployment status (success)
-      if: github.ref == 'deploy_action' && success()
+      if: github.ref == 'refs/heads/deploy_action' && success()
       uses: chrnorm/deployment-status@releases/v1
       with:
         token: "${{ secrets.GITHUB_TOKEN }}"
@@ -50,7 +50,7 @@ jobs:
         state: "success"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
     - name: Update deployment status (failure)
-      if: github.ref == 'deploy_action' && failure()
+      if: github.ref == 'refs/heads/deploy_action' && failure()
       uses: chrnorm/deployment-status@releases/v1
       with:
         token: "${{ secrets.GITHUB_TOKEN }}"
