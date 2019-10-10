@@ -40,7 +40,7 @@ jobs:
         GIGALIXIR_TOKEN: ${{ secrets.GIGALIXIR_TOKEN }}
         GIGALIXIR_USER: joel%40vorce.se
       with:
-        args: git remote set-url --push origin https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git
+        args: git remote set-url --push gigalixir https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git && git push gigalixir
     - name: Update deployment status (success)
       if: github.ref == 'refs/heads/deploy_action' && success()
       uses: chrnorm/deployment-status@releases/v1
