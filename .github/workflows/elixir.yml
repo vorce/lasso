@@ -35,15 +35,12 @@ jobs:
           environment: production
     - name: Deploy to Gigalixir
       if: github.ref == 'refs/heads/deploy_action'
-      # uses: srt32/git-actions@v0.0.3
+      uses: srt32/git-actions@v0.0.3
       env:
         GIGALIXIR_TOKEN: ${{ secrets.GIGALIXIR_TOKEN }}
         GIGALIXIR_USER: joel%40vorce.se
-      run: |
-        git remote add gigalixir https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git
-        git push gigalixir
-      #with:
-      #  args: git remote add gigalixir https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git && git push gigalixir
+      with:
+        args: git remote add gigalixir https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git && git checkout master && git push gigalixir
     - name: Update deployment status (success)
       if: github.ref == 'refs/heads/deploy_action' && success()
       uses: chrnorm/deployment-status@releases/v1
