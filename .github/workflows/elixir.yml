@@ -1,4 +1,4 @@
-name: Elixir CI
+name: Elixir CI/CD
 
 on: push
 
@@ -23,3 +23,31 @@ jobs:
       run: mix sobelow --exit
     - name: Run Tests
       run: mix test
+    - uses: chrnorm/deployment-action@releases/v1
+      name: Create GitHub deployment
+      id: deployment
+      with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          target-url: https://lasso.gigalixirapp.com/
+          environment: production
+    - name: Deploy to Gigalixir
+      if: github.ref == 'master'
+      uses: srt32/git-actions@v0.0.3
+      with:
+        args: git status
+    - name: Update deployment status (success)
+      if: github.ref == 'master' && success()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: "${{ github.token }}"
+        target-url: https://lasso.gigalixirapp.com/
+        state: "success"
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+    - name: Update deployment status (failure)
+      if: github.ref == 'master' && failure()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: "${{ github.token }}"
+        target-url: https://lasso.gigalixirapp.com/
+        state: "failure"
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
