@@ -1,0 +1,55 @@
+name: Elixir CI/CD master
+
+on:
+  push:
+    branches:
+      - deploy_action # Replace with master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: elixir:1.9.1-slim
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Dependencies
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
+    - name: Credo
+      run: mix credo
+    - name: Sobelow security analysis
+      run: mix sobelow --exit
+    - name: Run Tests
+      run: mix test
+    - uses: chrnorm/deployment-action@releases/v1
+      name: Create GitHub deployment
+      id: deployment
+      with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          target-url: https://lasso.gigalixirapp.com/
+          environment: production
+    - name: Deploy to Gigalixir
+      uses: srt32/git-actions@v0.0.3
+      with:
+        args: git status
+    - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: "${{ github.token }}"
+          target-url: https://lasso.gigalixirapp.com/
+          state: "success"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: "${{ github.token }}"
+          target-url: https://lasso.gigalixirapp.com/
+          state: "failure"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
