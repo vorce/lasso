@@ -33,8 +33,11 @@ jobs:
     - name: Deploy to Gigalixir
       if: github.ref == 'master'
       uses: srt32/git-actions@v0.0.3
+      env:
+        GIGALIXIR_TOKEN: ${{ secrets.GIGALIXIR_TOKEN }}
+        GIGALIXIR_USER: joel%40vorce.se
       with:
-        args: git status
+        args: git remote set-url --push origin https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git
     - name: Update deployment status (success)
       if: github.ref == 'master' && success()
       uses: chrnorm/deployment-status@releases/v1
