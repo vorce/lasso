@@ -20,7 +20,7 @@ jobs:
     - name: Credo
       run: mix credo
     - name: Sobelow security analysis
-      run: mix sobelow --exit
+      run: mix sobelow -i Config.CSRFRoute --exit
     - name: Run Tests
       run: mix test
     - uses: chrnorm/deployment-action@releases/v1
