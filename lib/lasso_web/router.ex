@@ -30,6 +30,8 @@ defmodule LassoWeb.Router do
     get "/lasso/:uuid/view", LassoViewController, :show
   end
 
+  # The `get` here gets flagged by Sobelow as a potential for  "CSRF via Action Reuse"
+  # It does not matter if a user can trigger the post request in this scenario.
   scope "/lasso", LassoWeb do
     get "/:uuid", LassoController, :request
     put "/:uuid", LassoController, :request
