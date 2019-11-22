@@ -1,29 +1,20 @@
-<div class="row">
-    <div class="col-12">
-        <h2>Hello Admin ✨</h2>
-        <p class="lead">Here's some useful information for you (updated live!)</p>
+<h2 class="text-3xl">Hello Admin ✨</h2>
+<p class="text-lg mb-4">Here's some useful information for you (updated live!)</p>
+
+<div class="flex">
+    <div class="mr-4">
+        <h3 class="text-2xl bg-gray-200 rounded-tr rounded-tl p-3">Active lassos</h3>
+        <div class="p-3 border">
+            <p class="text-sm text-gray-700">Number of lassos that are active right now</p>
+            <span class="flex justify-end text-5xl"><%= @active_lassos %></span>
+        </div>
     </div>
-</div>
 
-<div class="row justify-content-center">
-    <div class="col-12" id="stats">
-
-        <div class="card-group">
-            <div class="card mb-3">
-                <h3 class="card-header">Active lassos</h3>
-                <div class="card-body">
-                    <p class="card-text">Number of lassos that are active right now</p>
-                    <span class="card-title float-right" style="font-size: 3em;"><%= @active_lassos %></span>
-                </div>
-            </div>
-
-            <div class="card mb-3">
-                <h3 class="card-header">Total lassos</h3>
-                <div class="card-body">
-                    <p class="card-text">Number of lassos created since last reboot</p>
-                    <span class="card-title float-right" style="font-size: 3em;"><%= @total_lassos %></span>
-                </div>
-            </div>
+    <div class="mx-4">
+        <h3 class="text-2xl bg-gray-200 rounded-tr rounded-tl p-3">Total lassos</h3>
+        <div class="p-3 border">
+            <p class="text-sm text-gray-700">Number of lassos created since last reboot</p>
+            <span class="flex justify-end text-5xl"><%= @total_lassos %></span>
         </div>
     </div>
 </div>
