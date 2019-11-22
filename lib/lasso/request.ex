@@ -32,14 +32,14 @@ defmodule Lasso.Request do
   end
 
   # Not sure about this one... should move into template or something.
-  def badge_classes(), do: "badge float-right"
-  def badge_classes("GET"), do: badge_classes() <> " badge-primary"
-  def badge_classes("POST"), do: badge_classes() <> " badge-success"
-  def badge_classes("PUT"), do: badge_classes() <> " badge-warning"
-  def badge_classes("DELETE"), do: badge_classes() <> " badge-danger"
-  def badge_classes("PATCH"), do: badge_classes() <> " badge-info"
-  def badge_classes("OPTIONS"), do: badge_classes() <> " badge-dark"
-  def badge_classes(_), do: badge_classes() <> " badge-secondary"
+  def badge_classes(), do: "rounded-sm"
+  def badge_classes("GET"), do: badge_classes() <> " bg-blue-600"
+  def badge_classes("POST"), do: badge_classes() <> " bg-green-600"
+  def badge_classes("PUT"), do: badge_classes() <> " bg-yellow-600"
+  def badge_classes("DELETE"), do: badge_classes() <> " bg-red-600"
+  def badge_classes("PATCH"), do: badge_classes() <> " bg-blue-600"
+  def badge_classes("OPTIONS"), do: badge_classes() <> " bg-gray-700"
+  def badge_classes(_), do: badge_classes() <> " bg-gray-700"
 
   defp formatted_body(nil, _), do: ""
 

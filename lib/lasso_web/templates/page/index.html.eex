@@ -1,19 +1,22 @@
-<div class="jumbotron">
-<img class="img-fluid float-right mt-0 px-3"
+<div class="container rounded-lg pt-16 pb-16 pr-20 pl-20 px-4 bg-gray-300">
+
+<img class="float-right px-3"
     src="/images/lasso.svg"
     alt="lasso logo"
     height="100px"
     width="100px" />
 
-  <p class="lead">
+  <p class="text-2xl">
   A tool to visualize HTTP requests, specifically made for inspecting webhook callbacks.
   </p>
 
-  <hr class="my-4">
+  <hr class="border border-gray-400 mt-6 mb-6">
 
-  <p>When you create a “lasso”, you’ll get a unique URL that you can use as the destination for HTTP requests. Lasso will receive and store HTTP requests to this endpoint, so you can view and debug the body/headers/params.</p>
-  
+  <p class="text-lg">When you create a “lasso”, you’ll get a unique URL that you can use as the destination for HTTP requests. Lasso will receive and store HTTP requests to this endpoint, so you can view and debug the body/headers/params.</p>
+
+  <div class="flex justify-center">
   <%= form_for @conn, Routes.lasso_view_path(@conn, :new), [method: :post], fn _f -> %>
-      <%= submit "Create new lasso", class: "btn btn-dark btn-lg" %>
+      <%= submit "Create new lasso", class: "bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-10 justify-center" %>
   <% end %>
+  </div>
 </div>

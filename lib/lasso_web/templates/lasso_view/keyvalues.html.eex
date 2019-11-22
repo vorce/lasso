@@ -1,6 +1,6 @@
-<dl class="row">
+<dl class="flex flex-wrap mb-3">
     <%= for {key, value} <- @map do %>
-        <dt class="col-4" style="margin-bottom: 0"><span class="small"><b><%= key %></b></span></dt>
-        <dd class="col-8" style="margin-bottom: 0"><samp class="small"><%= value %></samp></dd>
+        <dt class="w-1/4"><span class="text-sm"><b><%= key %></b></span></dt>
+        <dd class="w-9/12 overflow-auto m-l-auto"><samp class="text-sm"><%= value %></samp></dd>
     <% end %>
 </dl>
