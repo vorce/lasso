@@ -19,11 +19,11 @@
   <body>
     <header class="container mx-auto" role="banner" aria-label="Header">
       <section class="container">
-        <div class="inner" role="navigation" aria-label="Navigation">
-          <nav class="inline-block float-right">
+        <div class="flex flex-row justify-between" role="navigation" aria-label="Navigation">
+          <h1 class="text-3xl"><a href="/" class="font-bold">Lasso</a> <small class="font-thin text-gray-500"><%= :application.get_key(:lasso, :vsn) |> elem(1) %></small></h1>
+          <nav class="flex-0 self-center">
             <a class="nav-link text-gray-600" href="https://github.com/vorce/lasso">Code</a>
           </nav>
-          <h1 class="inline-block" style="font-size: 2rem;"><a href="/" class="text-dark"><strong>Lasso</strong></a> <small class="font-thin text-gray-500"><%= :application.get_key(:lasso, :vsn) |> elem(1) %></small></h1>
         </div>
       </section>
     </header>
