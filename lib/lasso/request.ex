@@ -35,7 +35,7 @@ defmodule Lasso.Request do
   def badge_classes(), do: "rounded-sm"
   def badge_classes("GET"), do: badge_classes() <> " bg-blue-600"
   def badge_classes("POST"), do: badge_classes() <> " bg-green-600"
-  def badge_classes("PUT"), do: badge_classes() <> " bg-yellow-600"
+  def badge_classes("PUT"), do: badge_classes() <> " bg-yellow-500"
   def badge_classes("DELETE"), do: badge_classes() <> " bg-red-600"
   def badge_classes("PATCH"), do: badge_classes() <> " bg-blue-600"
   def badge_classes("OPTIONS"), do: badge_classes() <> " bg-gray-700"
