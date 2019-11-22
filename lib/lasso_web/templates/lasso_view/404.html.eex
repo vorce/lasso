@@ -1,10 +1,8 @@
-<div class="row">
-    <div class="col-12">
+<div class="container">
     <h3>Uh oh</h3>
     <p>
     Can't find that. Maybe the lasso expired?
     
-    <a href="/">Create a new one</a>
+    <a class="hover:underline text-blue-500 hover:text-blue-700" href="/">Create a new one</a>
     </p>
-    </div>
 </div>
