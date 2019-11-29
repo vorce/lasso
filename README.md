@@ -35,7 +35,11 @@ Yay for [releases](https://hexdocs.pm/mix/Mix.Tasks.Release.html) in Elixir 1.9.
 Phoenix has some [additional docs](https://github.com/phoenixframework/phoenix/blob/master/guides/deployment/releases.md) for being deployed in a release.
 
 ```bash
+mix deps.get --only prod
+mix compile
+npm run deploy --prefix ./assets
+mix phx.digest
 export SECRET_KEY_BASE=...
-APP_NAME=lasso MIX_ENV=prod SECRET_SALT=... mix release
+MIX_ENV=prod APP_NAME=lasso MIX_ENV=prod SECRET_SALT=... mix release
 _build/prod/rel/lasso/bin/lasso start
 ```
