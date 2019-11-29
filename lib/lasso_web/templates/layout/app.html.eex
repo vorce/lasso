@@ -13,27 +13,30 @@
 
     <title>Lasso - webhook UI</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
-    <header class="masthead mb-auto clearfix" role="banner" aria-label="Header">
+    <header class="container mx-auto" role="banner" aria-label="Header">
       <section class="container">
-        <div class="inner" role="navigation" aria-label="Navigation">
-          <nav class="nav nav-masthead float-right">
-            <a class="nav-link text-secondary" href="https://github.com/vorce/lasso">Code</a>
+        <div class="flex flex-row justify-between" role="navigation" aria-label="Navigation">
+          <h1 class="text-3xl"><a href="/" class="font-bold">Lasso</a> <small class="font-thin text-gray-500"><%= :application.get_key(:lasso, :vsn) |> elem(1) %></small></h1>
+          <nav class="flex-0 self-center">
+            <a class="nav-link text-gray-600" href="https://github.com/vorce/lasso">Code</a>
           </nav>
-          <h1 class="masthead-brand font-weight-normal" style="font-size: 2rem;"><a href="/" class="text-dark"><strong>Lasso</strong></a> <small class="text-muted font-weight-lighter"><%= :application.get_key(:lasso, :vsn) |> elem(1) %></small></h1>
         </div>
       </section>
     </header>
 
-    <main role="main" class="container" aria-label="Main content">
+    <main role="main" class="container mx-auto" aria-label="Main content">
       <%= unless is_nil(get_flash(@conn, :info)) do %>
-        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+        <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-2 rounded relative mb-2" role="alert">
+          <span class="block sm:inline"><%= get_flash(@conn, :info) %></span>
+        </div>
       <% end %>
       <%= unless is_nil(get_flash(@conn, :error)) do %>
-        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative mb-2" role="alert">
+          <span class="block sm:inline"><%= get_flash(@conn, :error) %></span>
+        </div>
       <% end %>
       <%= render @view_module, @view_template, assigns %>
     </main>

@@ -1,42 +1,33 @@
-<div class="row">
-<div class="col-12" aria-label="Lasso intro">
-    <div class="row float-right">
-        <div class="col-xs-offset 1 col-xs-11 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar">
-                <div class="btn-group btn-group-justified" role="group">
-                    <div class="btn-group" role="group">
-                        <button id="link" class="btn btn-info" data-original-title="Link" aria-label="Copy lasso URL" onclick="navigator.clipboard.writeText('<%= @url %>');"><img src="/images/link.svg" title="Copy lasso link to clipboard"></button>
-                    </div>
+<div class="container">
+    <div aria-label="Lasso intro">
+        <div class="float-right inline-flex" role="group">
+            <div class="btn-group flex-1" role="group">
+                <button id="link" class="bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-l" data-original-title="Link" aria-label="Copy lasso URL" onclick="navigator.clipboard.writeText('<%= @url %>');"><img src="/images/link.svg" title="Copy lasso link to clipboard"></button>
+            </div>
 
-                    <div class="btn-group" role="group">
-                        <button id="clear" class="btn btn-dark" data-original-title="Clear" aria-label="Clear existing requests in lasso" phx-click="clear" phx-value="<%= @uuid %>"><img src="/images/cancel.svg" title="Clear all current requests in the lasso"></button>
-                    </div>
-                    
-                    <div class="btn-group" role="group">
-                        <button id="delete" class="btn btn-danger" data-original-title="Delete" aria-label="Delete lasso" data-confirm="Are you sure?" phx-click="delete" phx-value="<%= @uuid %>"><img src="/images/bin.svg" title="Delete this lasso"></button>
-                    </div>
-                </div>
+            <div class="btn-group flex-1" role="group">
+                <button id="clear" class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4" data-original-title="Clear" aria-label="Clear existing requests in lasso" phx-click="clear" phx-value="<%= @uuid %>"><img src="/images/cancel.svg" title="Clear all current requests in the lasso"></button>
+            </div>
+            
+            <div class="btn-group flex-1" role="group">
+                <button id="delete" class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-r" data-original-title="Delete" aria-label="Delete lasso" data-confirm="Are you sure?" phx-click="delete" phx-value="<%= @uuid %>"><img src="/images/bin.svg" title="Delete this lasso"></button>
             </div>
         </div>
-    </div>
 
-    <p class="lead">
-    This is your lasso, it will be available for 24 hours.<br />
-    You can see any requests made to <a href="<%= @url %>"><%= @url %></a> here.
-    </p>
+        <p class="text-lg mt-2 mb-2">
+        This is your lasso, it will be available for 24 hours.<br />
+        You can see any requests made to <a class="hover:underline text-blue-500 hover:text-blue-700" href="<%= @url %>"><%= @url %></a> here.
+        </p>
 
-    <div class="alert alert-info" role="alert" aria-label="Example request">
-        <h5 class="alert-heading">Try it out</h5>
-        <code>curl -XPOST '<%= @url %>?something=foo' -H 'Content-type: application/json' -d '{"hello": "world"}'</code>
+        <div class="bg-blue-100 rounded p-4 mt-4 mb-4 border border-blue-200" role="alert" aria-label="Example request">
+            <h5 class="text-xl font-semibold mb-2">Try it out</h5>
+            <code class="text-sm text-pink-700">curl -XPOST '<%= @url %>?something=foo' -H 'Content-type: application/json' -d '{"hello": "world"}'</code>
+        </div>
     </div>
 </div>
 
-</div>
-
-<div class="row justify-content-center">
-<div class="col-12" id="requests">
+<div id="requests">
     <%= for request <- @requests do %>
         <%= render "request.html", request: request %>
     <% end %>
-</div>
 </div>

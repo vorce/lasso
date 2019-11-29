@@ -1,34 +1,18 @@
 
-<div class="row">
-<div class="col">
+<div class="border border-gray-400 rounded p-4 flex flex-col justify-between leading-normal mb-4" role="article" aria-label="Request details">
+  <h5 class="text-xl font-bold">Request from: <%= @request.ip %> <small class="text-sm font-normal text-gray-700"><%= DateTime.to_iso8601(@request.timestamp) %></small> <span class="<%= @request.badge_class %> text-white float-right text-sm p-1"><%= @request.method %></span></h5>
+  <details>
+      <summary>Headers</summary>
+      <%= render "keyvalues.html", map: @request.headers %>
+  </details>
 
-<div class="card mb-3" role="article" aria-label="Request details">
-  <div class="card-body">
-    <h5 class="card-subtitle mb-2">Request from: <%= @request.ip %> <small class="text-muted"><%= DateTime.to_iso8601(@request.timestamp) %></small> <span class="<%= @request.badge_class %>"><%= @request.method %></span></h5>
-    <p class="card-text">
-      <div class="row">
-        <div class="col-12">
-        <details>
-            <summary>Headers</summary>
-            <%= render "keyvalues.html", map: @request.headers %>
-        </details>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-        <details>
-            <summary>Query params</summary>
-            <%= render "keyvalues.html", map: @request.query_params %>
-        </details>
-        </div>
-      </div>
-      <details open>
-        <summary>Body</summary>
-        <samp><pre><%= @request.body %></pre></samp>
-      </details>
-    </p>
-  </div>
-</div>
+  <details>
+      <summary>Query params</summary>
+      <%= render "keyvalues.html", map: @request.query_params %>
+  </details>
 
-</div>
+  <details open>
+    <summary>Body</summary>
+    <samp><pre><%= @request.body %></pre></samp>
+  </details>
 </div>
