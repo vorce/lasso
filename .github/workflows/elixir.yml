@@ -38,7 +38,7 @@ jobs:
         GIGALIXIR_TOKEN: ${{ secrets.GIGALIXIR_TOKEN }}
         GIGALIXIR_USER: joel%40vorce.se
       with:
-        args: 'git checkout master && git remote add gigalixir https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git && git -c http.extraheader="GIGALIXIR-CLEAN: true" push gigalixir'
+        args: git checkout master && git remote add gigalixir https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git && git push gigalixir
     - name: Update deployment status on success
       if: github.ref == 'refs/heads/master' && success()
       uses: chrnorm/deployment-status@releases/v1
