@@ -9,9 +9,17 @@ defmodule LassoWeb.LassoLiveView do
     LassoWeb.LassoViewView.render("lasso.html", assigns)
   end
 
-  def mount(session, socket) do
-    Lasso.subscribe(session.uuid)
-    {:ok, assign(socket, requests: session.requests, url: session.url, uuid: session.uuid)}
+  def mount(_params, session, socket) do
+    uuid = Map.fetch!(session, "uuid")
+    Lasso.subscribe(uuid)
+
+    assigns = [
+      requests: Map.fetch!(session, "requests"),
+      url: Map.fetch!(session, "url"),
+      uuid: uuid
+    ]
+
+    {:ok, assign(socket, assigns)}
   end
 
   def handle_info({Lasso, _uuid, {:request, request}}, socket) do
