@@ -108,7 +108,7 @@ defmodule Lasso do
   def stats() do
     active_lassos = ConCache.get(@cache_id, @active_lassos_key) || 0
     total_lassos = ConCache.get(@cache_id, @total_lassos_key) || 0
-    {:ok, %{active_lassos: active_lassos, total_lassos: total_lassos}}
+    {:ok, %{"active_lassos" => active_lassos, "total_lassos" => total_lassos}}
   end
 
   defp notify_stats() do

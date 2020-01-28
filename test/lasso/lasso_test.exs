@@ -81,7 +81,7 @@ defmodule Lasso.LassoTest do
       Lasso.create("3")
       Lasso.delete("2")
 
-      assert {:ok, %{active_lassos: 2}} = Lasso.stats()
+      assert {:ok, %{"active_lassos" => 2}} = Lasso.stats()
     end
 
     test "returns total lassos" do
@@ -90,7 +90,7 @@ defmodule Lasso.LassoTest do
       Lasso.create("3")
       Lasso.delete("2")
 
-      assert {:ok, %{total_lassos: 3}} = Lasso.stats()
+      assert {:ok, %{"total_lassos" => 3}} = Lasso.stats()
     end
 
     test "is not affected by clear/1" do
@@ -99,7 +99,7 @@ defmodule Lasso.LassoTest do
       Lasso.create(lasso_id)
       Lasso.clear(lasso_id)
 
-      assert Lasso.stats() == {:ok, %{total_lassos: 1, active_lassos: 1}}
+      assert Lasso.stats() == {:ok, %{"total_lassos" => 1, "active_lassos" => 1}}
     end
   end
 end

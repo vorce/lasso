@@ -9,11 +9,15 @@ defmodule LassoWeb.AdminLiveView do
     LassoWeb.AdminView.render("index.html", assigns)
   end
 
-  def mount(session, socket) do
+  def mount(_params, session, socket) do
     Lasso.subscribe(@admin_events)
 
-    {:ok,
-     assign(socket, active_lassos: session.active_lassos, total_lassos: session.total_lassos)}
+    assigns = [
+      active_lassos: Map.fetch!(session, "active_lassos"),
+      total_lassos: Map.fetch!(session, "total_lassos")
+    ]
+
+    {:ok, assign(socket, assigns)}
   end
 
   def handle_info({Lasso, @admin_events, {:stats, stats}}, socket) do

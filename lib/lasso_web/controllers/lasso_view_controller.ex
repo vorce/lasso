@@ -11,7 +11,7 @@ defmodule LassoWeb.LassoViewController do
         Controller.live_render(
           conn,
           LassoWeb.LassoLiveView,
-          session: %{url: url, uuid: uuid, requests: requests}
+          session: %{"url" => url, "uuid" => uuid, "requests" => requests}
         )
 
       {:error, :no_such_key, _} ->
