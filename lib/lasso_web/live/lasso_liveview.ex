@@ -32,7 +32,7 @@ defmodule LassoWeb.LassoLiveView do
   end
 
   def handle_info({Lasso, _uuid, :delete}, socket) do
-    {:stop, redirect(socket, to: "/")}
+    {:noreply, redirect(socket, to: "/")}
   end
 
   def handle_event("clear", _, %{assigns: %{uuid: uuid}} = socket) do
@@ -43,8 +43,13 @@ defmodule LassoWeb.LassoLiveView do
 
   def handle_event("delete", _, %{assigns: %{uuid: uuid}} = socket) do
     Logger.info("Deleting lasso with uuid: #{uuid}")
-    socket = delete(socket, uuid)
-    {:stop, redirect(socket, to: "/")}
+
+    socket =
+      socket
+      |> delete(uuid)
+      |> redirect(to: "/")
+
+    {:noreply, socket}
   end
 
   defp clear(socket, uuid) do
