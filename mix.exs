@@ -45,7 +45,8 @@ defmodule Lasso.MixProject do
       {:con_cache, "~> 0.13"},
       {:basic_auth, "~> 2.2"},
       {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
-      {:sobelow, "~> 0.8", only: :dev, runtime: false}
+      {:sobelow, "~> 0.8", only: :dev, runtime: false},
+      {:floki, "~> 0.26", only: [:test], runtime: false}
     ]
   end
 end
