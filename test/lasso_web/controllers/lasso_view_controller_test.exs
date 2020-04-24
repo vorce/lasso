@@ -12,8 +12,8 @@ defmodule LassoWeb.LassoViewControllerTest do
 
     # Which contains 0 requests to begin with
     requests =
-      get(conn, path)
-      |> response(200)
+      conn
+      |> lasso_view_html(path)
       |> request_list()
 
     assert requests == []
@@ -22,11 +22,49 @@ defmodule LassoWeb.LassoViewControllerTest do
     requests =
       uuid
       |> post_to_lasso(%{hello: "world"})
-      |> get(path)
-      |> response(200)
+      |> lasso_view_html(path)
       |> request_list()
 
     assert length(requests) == 1
+  end
+
+  test "clear lasso", %{conn: conn} do
+    conn = post(conn, "/admin/lasso/")
+
+    assert conn.status == 302
+
+    path = redirected_to(conn)
+    [_, _, uuid, _] = String.split(path, "/")
+
+    requests =
+      conn
+      |> lasso_view_html(path)
+      |> request_list()
+
+    assert requests == []
+
+    requests =
+      uuid
+      |> post_to_lasso(%{hello: "world"})
+      |> lasso_view_html(path)
+      |> request_list()
+
+    assert length(requests) == 1
+
+    :ok = Lasso.clear(uuid)
+
+    requests =
+      conn
+      |> lasso_view_html(path)
+      |> request_list()
+
+    assert requests == []
+  end
+
+  defp lasso_view_html(conn, path) do
+    conn
+    |> get(path)
+    |> response(200)
   end
 
   defp request_list(html) do
