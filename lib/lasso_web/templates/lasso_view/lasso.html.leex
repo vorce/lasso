@@ -34,9 +34,5 @@
 </div>
 
 <div class="row justify-content-center">
-<div class="col-12" id="requests">
-    <%= for request <- @requests do %>
-        <%= render "request.html", request: request %>
-    <% end %>
-</div>
+    <%= render_requests(@requests, cleared?: @cleared) %>
 </div>

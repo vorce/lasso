@@ -16,19 +16,20 @@ defmodule LassoWeb.LassoLiveView do
     assigns = [
       requests: Map.fetch!(session, "requests"),
       url: Map.fetch!(session, "url"),
-      uuid: uuid
+      uuid: uuid,
+      cleared: false
     ]
 
-    {:ok, assign(socket, assigns)}
+    {:ok, assign(socket, assigns), temporary_assigns: [requests: []]}
   end
 
   def handle_info({Lasso, _uuid, {:request, request}}, socket) do
     all_requests = Enum.take([request | socket.assigns.requests], @request_limit)
-    {:noreply, assign(socket, :requests, all_requests)}
+    {:noreply, assign(socket, requests: all_requests, cleared: false)}
   end
 
   def handle_info({Lasso, _uuid, :clear}, socket) do
-    {:noreply, assign(socket, :requests, [])}
+    {:noreply, assign(socket, requests: [], cleared: true)}
   end
 
   def handle_info({Lasso, _uuid, :delete}, socket) do
@@ -38,7 +39,7 @@ defmodule LassoWeb.LassoLiveView do
   def handle_event("clear", _, %{assigns: %{uuid: uuid}} = socket) do
     Logger.info("Clearing requests for lasso with uuid: #{uuid}")
     socket = clear(socket, uuid)
-    {:noreply, assign(socket, :requests, [])}
+    {:noreply, assign(socket, requests: [], cleared: true)}
   end
 
   def handle_event("delete", _, %{assigns: %{uuid: uuid}} = socket) do
