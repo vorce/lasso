@@ -12,7 +12,7 @@ config :lasso, LassoWeb.Endpoint,
   url: [host: {:system, "APP_HOST"}],
   secret_key_base: "Onno9Q87iKwW3FJNhrqdagj16XBSkh7zQm2Kv1jFwnKsDfiTffYYH9SG3uXki55B",
   render_errors: [view: LassoWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Lasso.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: Lasso.PubSub,
   live_view: [
     signing_salt: System.get_env("SECRET_SALT") || "38k3jc4wTIxlt16PsbudWeXe497ET9TM"
   ]

@@ -35,7 +35,7 @@
       <%= unless is_nil(get_flash(@conn, :error)) do %>
         <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <% end %>
-      <%= render @view_module, @view_template, assigns %>
+      <%= @inner_content %>
     </main>
 
     <%= csrf_meta_tag() %>

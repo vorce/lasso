@@ -17,7 +17,7 @@ config :lasso, LassoWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
   check_origin: ["https://" <> System.get_env("APP_NAME") <> ".gigalixirapp.com", "//localhost"],
   server: true,
-  pubsub: [name: Lasso.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: Lasso.PubSub,
   live_view: [
     signing_salt: System.get_env("SECRET_SALT") || "38k3jc4wTIxlt16PsbudWeXe497ET9TM"
   ]
