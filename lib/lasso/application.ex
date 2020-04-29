@@ -16,7 +16,7 @@ defmodule Lasso.Application do
          ets_options: [:compressed],
          callback: &Lasso.cache_callback/1
        ]},
-
+      {Phoenix.PubSub, name: Lasso.PubSub},
       # Start the endpoint when the application starts
       LassoWeb.Endpoint
       # Starts a worker by calling: Lasso.Worker.start_link(arg)
