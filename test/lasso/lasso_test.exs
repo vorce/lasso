@@ -5,6 +5,7 @@ defmodule Lasso.LassoTest do
     # Ensure the cache is cleared before each test
     Supervisor.terminate_child(Lasso.Supervisor, ConCache)
     Supervisor.restart_child(Lasso.Supervisor, ConCache)
+
     :ok
   end
 
@@ -74,32 +75,80 @@ defmodule Lasso.LassoTest do
     end
   end
 
-  describe "stats/0" do
-    test "returns active lassos" do
+  describe "telemetry events" do
+    setup :attach_telemetry_handlers
+
+    test "on create" do
       Lasso.create("1")
-      Lasso.create("2")
-      Lasso.create("3")
-      Lasso.delete("2")
 
-      assert {:ok, %{"active_lassos" => 2}} = Lasso.stats()
+      assert_receive {:telemetry_event, [:lasso, :action, :start], %{system_time: _},
+                      %{action: :create}}
+
+      assert_receive {:telemetry_event, [:lasso, :action, :stop], %{duration: _},
+                      %{action: :create}}
     end
 
-    test "returns total lassos" do
+    test "on get" do
       Lasso.create("1")
-      Lasso.create("2")
-      Lasso.create("3")
-      Lasso.delete("2")
+      Lasso.get("1")
 
-      assert {:ok, %{"total_lassos" => 3}} = Lasso.stats()
+      assert_receive {:telemetry_event, [:lasso, :action, :start], %{system_time: _},
+                      %{action: :get}}
+
+      assert_receive {:telemetry_event, [:lasso, :action, :stop], %{duration: _}, %{action: :get}}
     end
 
-    test "is not affected by clear/1" do
-      lasso_id = "stats"
+    test "on delete" do
+      Lasso.create("1")
+      Lasso.delete("1")
 
-      Lasso.create(lasso_id)
-      Lasso.clear(lasso_id)
+      assert_receive {:telemetry_event, [:lasso, :action, :start], %{system_time: _},
+                      %{action: :delete}}
 
-      assert Lasso.stats() == {:ok, %{"total_lassos" => 1, "active_lassos" => 1}}
+      assert_receive {:telemetry_event, [:lasso, :action, :stop], %{duration: _},
+                      %{action: :delete}}
     end
+
+    test "on clear" do
+      Lasso.create("1")
+      Lasso.clear("1")
+
+      assert_receive {:telemetry_event, [:lasso, :action, :start], %{system_time: _},
+                      %{action: :clear}}
+
+      assert_receive {:telemetry_event, [:lasso, :action, :stop], %{duration: _},
+                      %{action: :clear}}
+    end
+
+    test "on request" do
+      request = %Lasso.Request{method: "GET"}
+      Lasso.create("1")
+      Lasso.add("1", request)
+
+      assert_receive {:telemetry_event, [:lasso, :request, :start], %{system_time: _},
+                      %{request: request}}
+
+      assert_receive {:telemetry_event, [:lasso, :request, :stop], %{duration: _},
+                      %{request: request}}
+    end
+  end
+
+  defp attach_telemetry_handlers(%{test: test}) do
+    self = self()
+
+    :ok =
+      :telemetry.attach_many(
+        "telementry-handler-#{test}",
+        [
+          [:lasso, :action, :start],
+          [:lasso, :action, :stop],
+          [:lasso, :request, :start],
+          [:lasso, :request, :stop]
+        ],
+        fn name, measurements, metadata, _ ->
+          send(self, {:telemetry_event, name, measurements, metadata})
+        end,
+        nil
+      )
   end
 end
