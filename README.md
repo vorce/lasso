@@ -27,7 +27,7 @@ that I'd like to improve.
 
 ### Admin area
 
-There is a minimal admin page where you can see some stats about current lassos on [/admin](http://localhost:4000/admin). This page is protected by basic auth, the credentials can be configured in `config.exs`. By default the password is read from the environment variable `ADMIN_PASSWORD`.
+There's a Phoenix Live Dashboard available on [/admin](http://localhost:4000/admin). This page is protected by basic auth, the credentials can be configured in `config.exs`. By default the password is read from the environment variable `ADMIN_PASSWORD`.
 
 ## Building a release
 

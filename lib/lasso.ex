@@ -7,11 +7,6 @@ defmodule Lasso do
   @cache_id Application.get_env(:lasso, Lasso)[:cache_name]
   @request_limit Application.get_env(:lasso, Lasso)[:max_requests_per_lasso]
 
-  @active_lassos_key :active_lassos
-  @total_lassos_key :total_lassos
-
-  @admin_events Application.get_env(:lasso, Lasso)[:admin_events_topic]
-
   @topic inspect(__MODULE__)
 
   def subscribe(uuid) do
@@ -21,47 +16,40 @@ defmodule Lasso do
   @doc """
   Create a new lasso that we need to keep track of
   """
-  def create(uuid, opts \\ [update_stats: true]) do
-    result = ConCache.put(@cache_id, uuid, [])
-    if opts[:update_stats], do: update_stats()
-    result
-  end
-
-  defp update_stats() do
-    ConCache.update(@cache_id, @active_lassos_key, fn val ->
-      case val do
-        nil -> {:ok, 1}
-        val -> {:ok, val + 1}
-      end
-    end)
-
-    ConCache.update(@cache_id, @total_lassos_key, fn val ->
-      case val do
-        nil -> {:ok, 1}
-        val -> {:ok, val + 1}
-      end
-    end)
-
-    notify_stats()
+  def create(uuid, _opts \\ [update_stats: true]) do
+    with_telemetry_events(
+      fn -> ConCache.put(@cache_id, uuid, []) end,
+      {:action, %{action: :create}}
+    )
   end
 
   @doc """
   Get all the requests for a lasso
   """
   def get(uuid) do
-    case ConCache.get(@cache_id, uuid) do
-      nil -> {:error, :no_such_key, uuid}
-      value -> {:ok, value}
-    end
+    with_telemetry_events(
+      fn ->
+        case ConCache.get(@cache_id, uuid) do
+          nil -> {:error, :no_such_key, uuid}
+          value -> {:ok, value}
+        end
+      end,
+      {:action, %{action: :get}}
+    )
   end
 
   @doc """
   Append a request to a lasso
   """
   def add(uuid, request) do
-    with :ok <- update(uuid, request) do
-      notify_subscribers(uuid, {:request, request})
-    end
+    with_telemetry_events(
+      fn ->
+        with :ok <- update(uuid, request) do
+          notify_subscribers(uuid, {:request, request})
+        end
+      end,
+      {:request, %{request: request}}
+    )
   end
 
   defp notify_subscribers(uuid, data) do
@@ -72,18 +60,28 @@ defmodule Lasso do
   Delete a lasso
   """
   def delete(uuid) do
-    ConCache.delete(@cache_id, uuid)
-    notify_subscribers(uuid, :delete)
+    with_telemetry_events(
+      fn ->
+        ConCache.delete(@cache_id, uuid)
+        notify_subscribers(uuid, :delete)
+      end,
+      {:action, %{action: :delete}}
+    )
   end
 
   @doc """
   Clear all requests for a lasso
   """
   def clear(uuid) do
-    with {:ok, _} <- get(uuid),
-         :ok <- create(uuid, update_stats: false) do
-      notify_subscribers(uuid, :clear)
-    end
+    with_telemetry_events(
+      fn ->
+        with {:ok, _} <- get(uuid),
+             :ok <- create(uuid, update_stats: false) do
+          notify_subscribers(uuid, :clear)
+        end
+      end,
+      {:action, %{action: :clear}}
+    )
   end
 
   @doc """
@@ -92,29 +90,8 @@ defmodule Lasso do
   def cache_callback({:update, _cache_pid, _key, _value}), do: :ok
 
   def cache_callback({:delete, _cache_pid, _key}) do
-    ConCache.update(@cache_id, @active_lassos_key, fn val ->
-      case val do
-        nil -> {:ok, 0}
-        val -> {:ok, max(0, val - 1)}
-      end
-    end)
-
-    notify_stats()
-  end
-
-  @doc """
-  Get statistics about lassos
-  """
-  def stats() do
-    active_lassos = ConCache.get(@cache_id, @active_lassos_key) || 0
-    total_lassos = ConCache.get(@cache_id, @total_lassos_key) || 0
-    {:ok, %{"active_lassos" => active_lassos, "total_lassos" => total_lassos}}
-  end
-
-  defp notify_stats() do
-    with {:ok, stats} <- stats() do
-      notify_subscribers(@admin_events, {:stats, stats})
-    end
+    emit_stop({:action, %{action: :delete}}, 1)
+    :ok
   end
 
   defp update(uuid, request) do
@@ -128,5 +105,33 @@ defmodule Lasso do
           {:ok, Enum.take([request | val], @request_limit)}
       end
     end)
+  end
+
+  defp with_telemetry_events(my_fn, path_meta) do
+    start_time = emit_start(path_meta)
+    result = my_fn.()
+    duration = System.monotonic_time() - start_time
+    emit_stop(path_meta, duration)
+    result
+  end
+
+  defp emit_start({path, meta}) do
+    start_time_mono = System.monotonic_time()
+
+    :telemetry.execute(
+      [:lasso, path, :start],
+      %{system_time: System.system_time()},
+      meta
+    )
+
+    start_time_mono
+  end
+
+  defp emit_stop({path, meta}, duration) do
+    :telemetry.execute(
+      [:lasso, path, :stop],
+      %{duration: duration},
+      meta
+    )
   end
 end

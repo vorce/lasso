@@ -1,6 +1,7 @@
 defmodule LassoWeb.Router do
   use LassoWeb, :router
   import Phoenix.LiveView.Router
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,16 +19,24 @@ defmodule LassoWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :admins_only do
+    plug BasicAuth, use_config: {:basic_auth, :admin_area}
+  end
+
   scope "/", LassoWeb do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/admin", AdminController, :index
 
     delete "/admin/lasso/:uuid", LassoViewController, :delete
     post "/admin/lasso/", LassoViewController, :new
 
     get "/lasso/:uuid/view", LassoViewController, :show
+  end
+
+  scope "/admin" do
+    pipe_through [:browser, :admins_only]
+    live_dashboard "/", metrics: LassoWeb.Telemetry
   end
 
   # The `get` here gets flagged by Sobelow as a potential for  "CSRF via Action Reuse"
