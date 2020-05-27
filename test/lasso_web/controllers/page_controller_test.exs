@@ -21,13 +21,13 @@ defmodule LassoWeb.PageControllerTest do
       assert response(conn, 401) =~ "Unauthorized"
     end
 
-    test "returns 200 with correct credentials", %{conn: conn} do
+    test "redirects with correct credentials", %{conn: conn} do
       conn =
         conn
         |> using_basic_auth("admin", "test")
         |> get("/admin")
 
-      assert redirected_to(conn, 302) == "/admin/nonode%40nohost"
+      assert redirected_to(conn, 302) == "/admin/nonode%40nohost/home"
     end
   end
 
