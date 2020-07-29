@@ -25,22 +25,22 @@ jobs:
       run: mix test
     - uses: chrnorm/deployment-action@releases/v1
       name: Create GitHub deployment
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
       id: deployment
       with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           target-url: https://lasso.gigalixirapp.com/
           environment: production
     - name: Deploy to Gigalixir
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
       uses: srt32/git-actions@v0.0.3
       env:
         GIGALIXIR_TOKEN: ${{ secrets.GIGALIXIR_TOKEN }}
         GIGALIXIR_USER: joel%40vorce.se
       with:
-        args: git checkout master && git remote add gigalixir https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git && git push gigalixir
+        args: git checkout main && git remote add gigalixir https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git && git push gigalixir
     - name: Update deployment status on success
-      if: github.ref == 'refs/heads/master' && success()
+      if: github.ref == 'refs/heads/main' && success()
       uses: chrnorm/deployment-status@releases/v1
       with:
         token: "${{ secrets.GITHUB_TOKEN }}"
@@ -48,7 +48,7 @@ jobs:
         state: "success"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
     - name: Update deployment status on failure
-      if: github.ref == 'refs/heads/master' && failure()
+      if: github.ref == 'refs/heads/main' && failure()
       uses: chrnorm/deployment-status@releases/v1
       with:
         token: "${{ secrets.GITHUB_TOKEN }}"
