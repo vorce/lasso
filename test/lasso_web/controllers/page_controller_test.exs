@@ -27,7 +27,7 @@ defmodule LassoWeb.PageControllerTest do
         |> using_basic_auth("admin", "test")
         |> get("/admin")
 
-      assert redirected_to(conn, 302) == "/admin/nonode%40nohost/home"
+      assert redirected_to(conn, 302) == "/admin/home"
     end
   end
 
