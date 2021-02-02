@@ -4,8 +4,8 @@ defmodule Lasso do
   """
   require Logger
 
-  @cache_id Application.get_env(:lasso, Lasso)[:cache_name]
-  @request_limit Application.get_env(:lasso, Lasso)[:max_requests_per_lasso]
+  @cache_id Application.compile_env(:lasso, [Lasso, :cache_name])
+  @request_limit Application.compile_env(:lasso, [Lasso, :max_requests_per_lasso])
 
   @topic inspect(__MODULE__)
 

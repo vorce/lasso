@@ -3,7 +3,7 @@ defmodule LassoWeb.LassoLiveView do
 
   require Logger
 
-  @request_limit Application.get_env(:lasso, Lasso)[:max_requests_per_lasso]
+  @request_limit Application.compile_env(:lasso, [Lasso, :max_requests_per_lasso])
 
   def render(assigns) do
     LassoWeb.LassoViewView.render("lasso.html", assigns)
