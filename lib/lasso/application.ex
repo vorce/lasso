@@ -3,11 +3,13 @@ defmodule Lasso.Application do
 
   use Application
 
+  @cache_name Application.compile_env(:lasso, [Lasso, :cache_name])
+
   def start(_type, _args) do
     children = [
       {ConCache,
        [
-         name: Application.get_env(:lasso, Lasso)[:cache_name],
+         name: @cache_name,
          ttl_check_interval: :timer.minutes(10),
          global_ttl: :timer.hours(24),
          ets_options: [:compressed],
