@@ -1,6 +1,23 @@
 defmodule LassoWeb.LassoViewControllerTest do
   use LassoWeb.ConnCase
 
+  test "an empty lasso has a placeholder", %{conn: conn} do
+    conn = post(conn, "/admin/lasso/")
+
+    assert conn.status == 302
+
+    path = redirected_to(conn)
+    [_, _, _uuid, _] = String.split(path, "/")
+
+    # Which contains 0 requests to begin with
+    placeholder? =
+      conn
+      |> lasso_view_html(path)
+      |> placeholder?()
+
+    assert placeholder?
+  end
+
   test "create, view and update a lasso", %{conn: conn} do
     # Create lasso redirects to the lasso view
     conn = post(conn, "/admin/lasso/")
@@ -77,5 +94,14 @@ defmodule LassoWeb.LassoViewControllerTest do
     build_conn()
     |> put_req_header("content-type", "application/json")
     |> post("/lasso/#{uuid}", Jason.encode!(payload))
+  end
+
+  defp placeholder?(html) do
+    {:ok, document} = Floki.parse_document(html)
+
+    case Floki.find(document, "div#no_requests") do
+      [{"div", _, _}] -> true
+      _ -> false
+    end
   end
 end
