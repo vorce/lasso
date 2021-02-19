@@ -10,9 +10,4 @@ config :lasso, LassoWeb.Endpoint,
 config :logger, level: :warn
 
 # Admin page credentials for tests
-config :basic_auth,
-  admin_area: [
-    username: "admin",
-    password: "test",
-    realm: "Admin area"
-  ]
+config :lasso, :basic_auth, username: "admin", password: "test"
