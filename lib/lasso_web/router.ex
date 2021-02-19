@@ -1,5 +1,6 @@
 defmodule LassoWeb.Router do
   use LassoWeb, :router
+  import Plug.BasicAuth
   import Phoenix.LiveView.Router
   import Phoenix.LiveDashboard.Router
 
@@ -20,7 +21,7 @@ defmodule LassoWeb.Router do
   end
 
   pipeline :admins_only do
-    plug BasicAuth, use_config: {:basic_auth, :admin_area}
+    plug :basic_auth, Application.compile_env(:lasso, :basic_auth)
   end
 
   scope "/", LassoWeb do

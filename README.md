@@ -22,7 +22,7 @@ that I'd like to improve.
 
 - `mix deps.get`
 - `cd assets && npm install && cd ..`
-- `iex -S mix phx.server`
+- `APP_HOST=localhost iex -S mix phx.server`
 - Go to [`localhost:4000`](http://localhost:4000) in your browser
 
 ### Admin area

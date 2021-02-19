@@ -26,12 +26,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Admin page credentials
-config :basic_auth,
-  admin_area: [
-    username: "admin",
-    password: {:system, "ADMIN_PASSWORD"},
-    realm: "Admin area"
-  ]
+config :lasso, :basic_auth, username: "admin", password: System.get_env("ADMIN_PASSWORD")
 
 config :lasso, Lasso,
   admin_events_topic: "_admin_events",
