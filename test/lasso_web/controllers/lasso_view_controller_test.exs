@@ -102,7 +102,6 @@ defmodule LassoWeb.LassoViewControllerTest do
     case Floki.find(document, "div#no_requests") do
       [{"div", _, _}] -> true
       _ ->
-        IO.inspect(document, label: "html")
         false
     end
   end
