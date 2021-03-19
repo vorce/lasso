@@ -78,6 +78,24 @@ defmodule LassoWeb.LassoViewControllerTest do
     assert requests == []
   end
 
+  test "placeholder for empty body", %{conn: conn} do
+    conn = post(conn, "/admin/lasso/")
+
+    assert conn.status == 302
+
+    path = redirected_to(conn)
+    [_, _, uuid, _] = String.split(path, "/")
+
+    [{_, _, [_, {_, _, [{_, _, [body_content]}]}]}] =
+      uuid
+      |> get_to_lasso()
+      |> lasso_view_html(path)
+      |> request_list()
+      |> Floki.find("details#request-body")
+
+    assert body_content =~ "No request body"
+  end
+
   defp lasso_view_html(conn, path) do
     conn
     |> get(path)
@@ -94,6 +112,10 @@ defmodule LassoWeb.LassoViewControllerTest do
     build_conn()
     |> put_req_header("content-type", "application/json")
     |> post("/lasso/#{uuid}", Jason.encode!(payload))
+  end
+
+  defp get_to_lasso(uuid) do
+    get(build_conn(), "/lasso/#{uuid}")
   end
 
   defp placeholder?(html) do
