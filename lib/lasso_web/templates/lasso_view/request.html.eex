@@ -22,9 +22,13 @@
         </details>
         </div>
       </div>
-      <details open>
+      <details open id="request-body">
         <summary>Body</summary>
-        <samp><pre><%= @request.body %></pre></samp>
+        <%= if @request.body == "" do %>
+          <small class="text-secondary"><em>No request body</em></small>
+        <% else %>
+          <samp><pre><%= @request.body %></pre></samp>
+        <% end %>
       </details>
     </p>
   </div>
