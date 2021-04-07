@@ -42,7 +42,7 @@ defmodule Lasso.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.1"},
       {:elixir_uuid, "~> 1.2"},
-      {:con_cache, "~> 0.13"},
+      {:con_cache, "~> 1.0"},
       {:phoenix_live_dashboard, "~> 0.2"},
       {:telemetry_poller, "~> 0.4"},
       {:telemetry_metrics, "~> 0.4"},
