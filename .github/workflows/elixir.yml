@@ -23,24 +23,34 @@ jobs:
       run: mix sobelow -i Config.CSRFRoute,Config.CSWH --exit
     - name: Run Tests
       run: mix test
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    - uses: actions/checkout@v2
+      with:
+          ref: main
+          fetch-depth: 0
     - uses: chrnorm/deployment-action@releases/v1
       name: Create GitHub deployment
-      if: github.ref == 'refs/heads/main'
       id: deployment
       with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           target-url: https://lasso.gigalixirapp.com/
           environment: production
-    - name: Deploy to Gigalixir
-      if: github.ref == 'refs/heads/main'
-      uses: srt32/git-actions@v0.0.3
-      env:
-        GIGALIXIR_TOKEN: ${{ secrets.GIGALIXIR_TOKEN }}
-        GIGALIXIR_USER: joel%40vorce.se
+    - uses: actions/setup-python@v2
       with:
-        args: git checkout main && git remote add gigalixir https://$GIGALIXIR_USER:$GIGALIXIR_TOKEN@git.gigalixir.com/lasso.git && git push gigalixir main:master
+        python-version: 3.8.1
+    - uses: mhanberg/gigalixir-action@v0.4.3
+      with:
+        GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
+        GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
+        GIGALIXIR_APP: ${{ secrets.GIGALIXIR_APPNAME }}
+        SSH_PRIVATE_KEY: ${{ secrets.GIGALIXIR_SSH_KEY }}
+        MIGRATIONS: false
     - name: Update deployment status on success
-      if: github.ref == 'refs/heads/main' && success()
+      if: success()
       uses: chrnorm/deployment-status@releases/v1
       with:
         token: "${{ secrets.GITHUB_TOKEN }}"
@@ -48,7 +58,7 @@ jobs:
         state: "success"
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
     - name: Update deployment status on failure
-      if: github.ref == 'refs/heads/main' && failure()
+      if: failure()
       uses: chrnorm/deployment-status@releases/v1
       with:
         token: "${{ secrets.GITHUB_TOKEN }}"
