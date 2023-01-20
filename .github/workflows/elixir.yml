@@ -4,25 +4,24 @@ on: push
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     container:
       image: elixir:1.10.3-slim
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Install Dependencies
-      run: |
-        mix local.rebar --force
-        mix local.hex --force
-        mix deps.get
-    - name: Credo
-      run: mix credo
-    - name: Sobelow security analysis
-      run: mix sobelow -i Config.CSRFRoute,Config.CSWH --exit
-    - name: Run Tests
-      run: mix test
+      - uses: actions/checkout@v1
+      - name: Install Dependencies
+        run: |
+          mix local.rebar --force
+          mix local.hex --force
+          mix deps.get
+      - name: Credo
+        run: mix credo
+      - name: Sobelow security analysis
+        run: mix sobelow -i Config.CSRFRoute,Config.CSWH --exit
+      - name: Run Tests
+        run: mix test
 
   deploy:
     needs: build
@@ -30,40 +29,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-      with:
+      - uses: actions/checkout@v2
+        with:
           ref: main
           fetch-depth: 0
-    - uses: chrnorm/deployment-action@releases/v1
-      name: Create GitHub deployment
-      id: deployment
-      with:
+      - uses: chrnorm/deployment-action@releases/v1
+        name: Create GitHub deployment
+        id: deployment
+        with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           target-url: https://lasso.gigalixirapp.com/
           environment: production
-    - uses: actions/setup-python@v2
-      with:
-        python-version: 3.11.0 
-    - uses: mhanberg/gigalixir-action@v0.4.3
-      with:
-        GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
-        GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
-        GIGALIXIR_APP: ${{ secrets.GIGALIXIR_APPNAME }}
-        SSH_PRIVATE_KEY: ${{ secrets.GIGALIXIR_SSH_KEY }}
-        MIGRATIONS: false
-    - name: Update deployment status on success
-      if: success()
-      uses: chrnorm/deployment-status@releases/v1
-      with:
-        token: "${{ secrets.GITHUB_TOKEN }}"
-        target-url: https://lasso.gigalixirapp.com/
-        state: "success"
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-    - name: Update deployment status on failure
-      if: failure()
-      uses: chrnorm/deployment-status@releases/v1
-      with:
-        token: "${{ secrets.GITHUB_TOKEN }}"
-        target-url: https://lasso.gigalixirapp.com/
-        state: "failure"
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.0
+      - uses: mhanberg/gigalixir-action@v0.6.1
+        with:
+          GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
+          GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
+          GIGALIXIR_APP: ${{ secrets.GIGALIXIR_APPNAME }}
+          SSH_PRIVATE_KEY: ${{ secrets.GIGALIXIR_SSH_KEY }}
+          MIGRATIONS: false
+      - name: Update deployment status on success
+        if: success()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          target-url: https://lasso.gigalixirapp.com/
+          state: "success"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+      - name: Update deployment status on failure
+        if: failure()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          target-url: https://lasso.gigalixirapp.com/
+          state: "failure"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
