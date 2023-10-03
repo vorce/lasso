@@ -1,4 +1,4 @@
-[![Github actions CI](https://github.com/vorce/lasso/workflows/Elixir%20CI/badge.svg)](https://github.com/vorce/lasso/actions) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=vorce/lasso)](https://dependabot.com)
+[![Github actions CI](https://github.com/vorce/lasso/workflows/Elixir%20CI/badge.svg)](https://github.com/vorce/lasso/actions) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=vorce/lasso)](https://dependabot.com) [![Casual Maintenance Intended](https://casuallymaintained.tech/badge.svg)](https://casuallymaintained.tech/)
 
 # Lasso
 
