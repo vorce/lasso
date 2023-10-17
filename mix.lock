@@ -9,7 +9,7 @@
   "elixir_uuid": {:hex, :elixir_uuid, "1.2.1", "dce506597acb7e6b0daeaff52ff6a9043f5919a4c3315abb4143f0b00378c097", [:mix], [], "hexpm", "f7eba2ea6c3555cea09706492716b0d87397b88946e6380898c2889d68585752"},
   "expo": {:hex, :expo, "0.4.1", "1c61d18a5df197dfda38861673d392e642649a9cef7694d2f97a587b2cfb319b", [:mix], [], "hexpm", "2ff7ba7a798c8c543c12550fa0e2cbc81b95d4974c65855d8d15ba7b37a1ce47"},
   "file_system": {:hex, :file_system, "0.2.10", "fb082005a9cd1711c05b5248710f8826b02d7d1784e7c3451f9c1231d4fc162d", [:mix], [], "hexpm", "41195edbfb562a593726eda3b3e8b103a309b733ad25f3d642ba49696bf715dc"},
-  "floki": {:hex, :floki, "0.34.2", "5fad07ef153b3b8ec110b6b155ec3780c4b2c4906297d0b4be1a7162d04a7e02", [:mix], [], "hexpm", "26b9d50f0f01796bc6be611ca815c5e0de034d2128e39cc9702eee6b66a4d1c8"},
+  "floki": {:hex, :floki, "0.35.1", "b21cf592ed38c1207c5ea52120a2e81d6ecba11337a633a3f29ec17a64033178", [:mix], [], "hexpm", "f126e3eb814f131c21befeeeb773d2c4e2331ce05214c1a9844a3edde5c69003"},
   "gettext": {:hex, :gettext, "0.22.2", "6bfca374de34ecc913a28ba391ca184d88d77810a3e427afa8454a71a51341ac", [:mix], [{:expo, "~> 0.4.0", [hex: :expo, repo: "hexpm", optional: false]}], "hexpm", "8a2d389673aea82d7eae387e6a2ccc12660610080ae7beb19452cfdc1ec30f60"},
   "html_entities": {:hex, :html_entities, "0.5.2", "9e47e70598da7de2a9ff6af8758399251db6dbb7eebe2b013f2bbd2515895c3c", [:mix], [], "hexpm", "c53ba390403485615623b9531e97696f076ed415e8d8058b1dbaa28181f4fdcc"},
   "jason": {:hex, :jason, "1.4.1", "af1504e35f629ddcdd6addb3513c3853991f694921b1b9368b0bd32beb9f1b63", [:mix], [{:decimal, "~> 1.0 or ~> 2.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm", "fbb01ecdfd565b56261302f7e1fcc27c4fb8f32d56eab74db621fc154604a7a1"},
